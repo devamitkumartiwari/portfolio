@@ -1,0 +1,89 @@
+
+name: portfolio
+description: "Amit Kumar Tiwari Portfolio"
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_html: any
+  url_strategy: any
+  universal_html: any
+
+  # http
+  http: any
+
+  # utils
+  mailto: any
+  flip_card: any
+  url_launcher: any
+  cupertino_icons: any
+  carousel_slider: any
+  animated_text_kit: any
+  font_awesome_flutter: any
+
+  # state management
+  provider: any
+
+  # cache
+  shared_preferences: any
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: any
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app/1024.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  windows:
+    generate: true
+    image_path: "assets/app/1024.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/app/1024.png"
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/app/
+    - assets/work/
+    - assets/photos/
+    - assets/services/
+    - assets/projects/
+#    - data.json
+
+  fonts:
+    - family: Agustina
+      fonts:
+        - asset: fonts/agustina/agustina.otf
+    
+    - family: Montserrat
+      fonts:
+        - asset: fonts/montserrat/montserrat.ttf
+    
+    - family: Poppins
+      fonts:
+        - asset: fonts/poppins/Poppins-Regular.ttf
+        - asset: fonts/poppins/Poppins-Light.ttf
+        - asset: fonts/poppins/Poppins-Bold.ttf
+          weight: 900
+        - asset: fonts/poppins/Poppins-Medium.ttf
+          weight: 300
+        - asset: fonts/poppins/Poppins-SemiBold.ttf
+          weight: 500
+        - asset: fonts/poppins/Poppins-Italic.ttf
+          style: italic
