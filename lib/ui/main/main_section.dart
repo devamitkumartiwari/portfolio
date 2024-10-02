@@ -1,7 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio/bloc/ScrollCubit.dart';
+import 'package:portfolio/bloc/ThemeCubit.dart';
 import 'package:portfolio/configs/configs.dart';
-import 'package:provider/provider.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:flutter/material.dart';
+import '../../bloc/DrawerCubit.dart';
 import '../../configs/app.dart';
 import 'package:portfolio/utils/export.dart';
 part 'widgets/_navbar_desktop.dart';
@@ -19,10 +22,11 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     App.init(context);
-    final drawerProvider = Provider.of<DrawerProvider>(context);
+
+    final drawerCubit = context.read<DrawerCubit>();
 
     return Scaffold(
-      key: drawerProvider.key,
+      key: drawerCubit.drawerKey,
       extendBodyBehindAppBar: true,
       drawer: !ResponsiveApp.isDesktop(context) ? const _MobileDrawer() : null,
       body: SafeArea(

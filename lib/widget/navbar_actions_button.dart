@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio/animations/entrance_fader.dart';
 import 'package:portfolio/configs/configs.dart';
-import 'package:portfolio/provider/scroll_provider.dart';
-import 'package:provider/provider.dart';
+
+import '../bloc/ScrollCubit.dart';
 
 class NavBarActionButton extends StatelessWidget {
   final String label;
@@ -15,7 +16,7 @@ class NavBarActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scrollProvider = Provider.of<ScrollProvider>(context);
+    final scrollCubit = context.read<ScrollCubit>();
 
     return EntranceFader(
       offset: const Offset(0, -10),
@@ -29,9 +30,9 @@ class NavBarActionButton extends StatelessWidget {
         child: MaterialButton(
           splashColor: Colors.white54,
           highlightColor: Colors.white54,
-          hoverColor: AppTheme.c!.primary,
+          hoverColor: AppTheme.currentTheme!.primary,
           onPressed: () {
-            scrollProvider.scroll(index);
+            scrollCubit.scroll(index);
           },
           child: Padding(
             padding: Space.all(0.15, 0.45),

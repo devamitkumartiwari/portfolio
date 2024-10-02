@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio/bloc/ThemeCubit.dart';
 import 'package:portfolio/configs/configs.dart';
 import 'package:portfolio/constants.dart';
-import 'package:portfolio/provider/app_provider.dart';
 import 'package:portfolio/responsive/responsive.dart';
 import 'package:portfolio/utils/utils.dart';
-import 'package:provider/provider.dart';
 
 class SocialLinks extends StatelessWidget {
   const SocialLinks({
@@ -12,7 +12,8 @@ class SocialLinks extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
+    final themeCubit = context.watch<ThemeCubit>();
+
     return Wrap(
       runSpacing: AppDimensions.normalize(10),
       alignment: WrapAlignment.center,
@@ -29,7 +30,9 @@ class SocialLinks extends StatelessWidget {
                 splashRadius: AppDimensions.normalize(12),
                 icon: Image.network(
                   e.value,
-                  color: appProvider.isDark ? Colors.white : Colors.black,
+                  color: themeCubit.state.themeMode == ThemeMode.dark
+                      ? Colors.white
+                      : Colors.black,
                   height: ResponsiveApp.isMobile(context)
                       ? AppDimensions.normalize(10)
                       : AppDimensions.normalize(12),
@@ -40,7 +43,7 @@ class SocialLinks extends StatelessWidget {
                 onPressed: () => openURL(
                   StaticUtils.socialLinks[e.key],
                 ),
-                hoverColor: AppTheme.c!.primary!,
+                hoverColor: AppTheme.currentTheme!.primary!,
               ),
             ),
           )

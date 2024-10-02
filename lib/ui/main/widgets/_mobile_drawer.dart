@@ -5,12 +5,14 @@ class _MobileDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
-    final scrollProvider = Provider.of<ScrollProvider>(context);
+    final themeCubit = context.watch<ThemeCubit>();
+    final scrollCubit = context.read<ScrollCubit>();
 
     return Drawer(
       child: Material(
-        color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+        color: themeCubit.state.themeMode == ThemeMode.dark
+            ? Colors.grey[900]
+            : Colors.white,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 25.0, 0, 0),
           child: Column(
@@ -23,19 +25,19 @@ class _MobileDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(
                   Icons.light_mode,
-                  color: AppTheme.c!.primary!,
+                  color: AppTheme.currentTheme!.primary!,
                 ),
                 title: const Text(
                   "Dark Mode",
                 ),
                 trailing: Switch(
                   inactiveTrackColor: Colors.grey,
-                  value: appProvider.isDark,
+                  value: themeCubit.state.themeMode == ThemeMode.dark,
                   onChanged: (value) {
-                    appProvider
+                    themeCubit
                         .setTheme(value ? ThemeMode.dark : ThemeMode.light);
                   },
-                  activeColor: AppTheme.c!.primary,
+                  activeColor: AppTheme.currentTheme!.primary,
                 ),
               ),
               const Divider(),
@@ -43,15 +45,16 @@ class _MobileDrawer extends StatelessWidget {
                     (e) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: MaterialButton(
-                        hoverColor: AppTheme.c!.primary!.withAlpha(70),
+                        hoverColor:
+                            AppTheme.currentTheme!.primary!.withAlpha(70),
                         onPressed: () {
-                          scrollProvider.scrollMobile(e.key);
+                          scrollCubit.scrollMobile(e.key);
                           Navigator.pop(context);
                         },
                         child: ListTile(
                           leading: Icon(
                             NavBarUtils.icons[e.key],
-                            color: AppTheme.c!.primary,
+                            color: AppTheme.currentTheme!.primary,
                           ),
                           title: Text(
                             e.value,
@@ -64,10 +67,10 @@ class _MobileDrawer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: MaterialButton(
-                  hoverColor: AppTheme.c!.primary!.withAlpha(150),
+                  hoverColor: AppTheme.currentTheme!.primary!.withAlpha(150),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      side: BorderSide(color: AppTheme.c!.primary!)),
+                      side: BorderSide(color: AppTheme.currentTheme!.primary!)),
                   onPressed: () => openURL(StaticUtils.resume),
                   child: const ListTile(
                     leading: Icon(

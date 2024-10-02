@@ -16,11 +16,6 @@ export '../ui/home/home_tab.dart';
 export '../ui/services/services.dart';
 
 /// provider
-export '../provider/app_provider.dart';
-export '../provider/drawer_provider.dart';
-export '../provider/scroll_provider.dart';
-
-/// provider
 export '../widget/about_me_data.dart';
 export '../widget/arrow_on_top.dart';
 export '../widget/community_button.dart';

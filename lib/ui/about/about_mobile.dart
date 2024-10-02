@@ -34,7 +34,7 @@ class AboutMobile extends StatelessWidget {
             child: Text(
               "Who am I?",
               style: AppText.b2!.copyWith(
-                color: AppTheme.c!.primary,
+                color: AppTheme.currentTheme!.primary,
               ),
             ),
           ),
@@ -65,7 +65,7 @@ class AboutMobile extends StatelessWidget {
           Text(
             'Technologies I have worked with:',
             style: AppText.l1!.copyWith(
-              color: AppTheme.c!.primary,
+              color: AppTheme.currentTheme!.primary,
             ),
           ),
           Space.y!,

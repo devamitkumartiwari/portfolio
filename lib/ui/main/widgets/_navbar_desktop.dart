@@ -5,11 +5,13 @@ class _NavbarDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
+    final themeCubit = context.watch<ThemeCubit>();
 
     return Container(
       padding: Space.all(),
-      color: appProvider.isDark ? Colors.black : Colors.white,
+      color: themeCubit.state.themeMode == ThemeMode.dark
+          ? Colors.black
+          : Colors.white,
       child: SingleChildScrollView(
         child: Row(
           children: [
@@ -26,11 +28,11 @@ class _NavbarDesktop extends StatelessWidget {
               delay: const Duration(milliseconds: 100),
               duration: const Duration(milliseconds: 250),
               child: MaterialButton(
-                hoverColor: AppTheme.c!.primary!.withAlpha(150),
+                hoverColor: AppTheme.currentTheme!.primary!.withAlpha(150),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                   side: BorderSide(
-                    color: AppTheme.c!.primary!,
+                    color: AppTheme.currentTheme!.primary!,
                   ),
                 ),
                 onPressed: () {
@@ -51,13 +53,13 @@ class _NavbarDesktop extends StatelessWidget {
             Space.x!,
             Switch(
               inactiveTrackColor: Colors.grey,
-              value: appProvider.isDark,
+              value: themeCubit.state.themeMode == ThemeMode.dark,
               onChanged: (value) {
-                appProvider.setTheme(
-                  !value ? ThemeMode.light : ThemeMode.dark,
+                themeCubit.setTheme(
+                  value ? ThemeMode.dark : ThemeMode.light,
                 );
               },
-              activeColor: AppTheme.c!.primary!,
+              activeColor: AppTheme.currentTheme!.primary!,
             ),
             Space.x!,
           ],
@@ -72,7 +74,8 @@ class _NavBarTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final drawerProvider = Provider.of<DrawerProvider>(context);
+    final drawerCubit = context.read<DrawerCubit>();
+    // final drawerProvider = Provider.of<DrawerProvider>(context);
 
     return Padding(
       padding: Space.v!,
@@ -83,7 +86,7 @@ class _NavBarTablet extends StatelessWidget {
             highlightColor: Colors.white54,
             splashRadius: AppDimensions.normalize(10),
             onPressed: () {
-              drawerProvider.key.currentState!.openDrawer();
+              drawerCubit.state.currentState?.openDrawer();
             },
             icon: const Icon(
               Icons.menu,

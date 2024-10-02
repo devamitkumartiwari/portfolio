@@ -11,7 +11,9 @@ class _ServiceCardBackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
+    // final appProvider = Provider.of<AppProvider>(context);
+
+    final themeCubit = context.watch<ThemeCubit>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -20,7 +22,9 @@ class _ServiceCardBackWidget extends StatelessWidget {
           style: AppText.l1,
         ),
         Divider(
-          color: appProvider.isDark ? Colors.white : Colors.black38,
+          color: themeCubit.state.themeMode == ThemeMode.dark
+              ? Colors.white
+              : Colors.black38,
         ),
         Container(
           height: AppDimensions.normalize(14),
@@ -29,10 +33,10 @@ class _ServiceCardBackWidget extends StatelessWidget {
               const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7),
-            color: AppTheme.c!.primary,
+            color: AppTheme.currentTheme!.primary,
           ),
           child: MaterialButton(
-            // color: AppTheme.c!.primary,
+            // color: AppTheme.currentTheme!.primary,
             onPressed: () => showDialog(
               context: context,
               builder: (_) => AlertDialog(
@@ -70,7 +74,7 @@ class _ServiceCardBackWidget extends StatelessWidget {
                             left: 10, right: 10, top: 4, bottom: 4),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
-                          color: AppTheme.c!.primary,
+                          color: AppTheme.currentTheme!.primary,
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -103,7 +107,7 @@ class _ServiceCardBackWidget extends StatelessWidget {
                             left: 10, right: 10, top: 4, bottom: 4),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
-                          color: AppTheme.c!.primary,
+                          color: AppTheme.currentTheme!.primary,
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,

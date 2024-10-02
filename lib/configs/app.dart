@@ -5,7 +5,8 @@ class App {
   static bool? isLtr;
   static bool showAds = false;
 
-  static init(BuildContext context) {
+  /// Initializes the application settings based on the provided context.
+  static void init(BuildContext context) {
     UI.init(context);
     AppDimensions.init();
     AppTheme.init(context);

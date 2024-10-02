@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ContactUtils {
   static const List<IconData> contactIcon = [
-    Icons.home,
+    Icons.home_filled,
     Icons.phone,
     Icons.mail,
   ];

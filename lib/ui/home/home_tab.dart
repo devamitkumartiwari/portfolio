@@ -84,7 +84,7 @@ class HomeTab extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.play_arrow_rounded,
-                        color: AppTheme.c!.primary!,
+                        color: AppTheme.currentTheme!.primary!,
                       ),
                       AnimatedTextKit(
                         animatedTexts: [

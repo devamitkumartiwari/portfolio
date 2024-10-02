@@ -43,7 +43,7 @@ abstract class UIProps {
       borderRadius: UIProps.buttonRadius,
       border: Border.all(
         width: 1.4,
-        color: AppTheme.c!.primary!,
+        color: AppTheme.currentTheme!.primary!,
       ),
     );
     btnPadSm = EdgeInsets.symmetric(
@@ -59,7 +59,7 @@ abstract class UIProps {
   static initShadows() {
     cardShadow = [
       BoxShadow(
-        color: AppTheme.c!.shadowSub!,
+        color: AppTheme.currentTheme!.shadowSub!,
         blurRadius: 6,
       ),
     ];
@@ -69,7 +69,7 @@ abstract class UIProps {
     boxCard = BoxDecoration(
       borderRadius: cardRadius,
       boxShadow: cardShadow,
-      color: AppTheme.c!.background,
+      color: AppTheme.currentTheme!.background,
     );
   }
 }

@@ -21,7 +21,7 @@ class _ServiceCardState extends State<_ServiceCard> {
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
+    final themeCubit = context.watch<ThemeCubit>();
 
     return InkWell(
       hoverColor: Colors.transparent,
@@ -45,7 +45,9 @@ class _ServiceCardState extends State<_ServiceCard> {
         flipOnTouch: kIsWeb ? false : true,
         key: cardKey,
         back: Card(
-          color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+          color: themeCubit.state.themeMode == ThemeMode.dark
+              ? Colors.grey[900]
+              : Colors.white,
           elevation: 1,
           borderOnForeground: true,
           shape: const RoundedRectangleBorder(
@@ -65,7 +67,9 @@ class _ServiceCardState extends State<_ServiceCard> {
           ),
         ),
         front: Card(
-          color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+          color: themeCubit.state.themeMode == ThemeMode.dark
+              ? Colors.grey[900]
+              : Colors.white,
           elevation: 1,
           borderOnForeground: true,
           shape: const RoundedRectangleBorder(
@@ -85,7 +89,7 @@ class _ServiceCardState extends State<_ServiceCard> {
                   widget.serviceIcon,
                   height: AppDimensions.normalize(30),
                   color: widget.serviceIcon.contains(StaticUtils.openSource) &&
-                          !appProvider.isDark
+                          themeCubit.state.themeMode == ThemeMode.dark
                       ? Colors.black
                       : null,
                 ),

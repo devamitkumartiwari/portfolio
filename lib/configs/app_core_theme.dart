@@ -1,45 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class AppCoreTheme {
-  Color? primary;
-  Color? primaryLight;
-  Color? primaryDark;
+part 'app_core_theme.freezed.dart';
 
-  Color? accent;
-  Color? accentLight;
-  Color? accentDark;
-
-  Color? background;
-  Color? backgroundSub;
-  Color? scaffold;
-  Color? scaffoldDark;
-
-  Color? text;
-  Color? textSub;
-  Color? textSub2;
-
-  Color? shadow; // Normal shadowOnBackground
-  Color? shadowSub; // Shadow light
-
-  AppCoreTheme({
-    this.primary,
-    this.primaryLight,
-    this.primaryDark,
-    this.accent,
-    this.accentLight,
-    this.accentDark,
-    this.background,
-    this.backgroundSub,
-    this.scaffold,
-    this.scaffoldDark,
-    this.text,
-    this.textSub,
-    this.textSub2,
-    this.shadow,
-    this.shadowSub,
-  });
-
-  AppCoreTheme copyWith({
+@freezed
+class AppCoreTheme with _$AppCoreTheme {
+  const factory AppCoreTheme({
     Color? primary,
     Color? primaryLight,
     Color? primaryDark,
@@ -53,28 +19,9 @@ class AppCoreTheme {
     Color? text,
     Color? textSub,
     Color? textSub2,
-    Color? shadow,
-    Color? shadowSub,
-    Color? upsellCard,
-    Color? hotelChipRefundable,
-    Color? hotelChipAirportTransfer,
-  }) {
-    return AppCoreTheme(
-      primary: primary ?? this.primary,
-      primaryLight: primaryLight ?? this.primaryLight,
-      primaryDark: primaryDark ?? this.primaryDark,
-      accent: accent ?? this.accent,
-      accentLight: accentLight ?? this.accentLight,
-      accentDark: accentDark ?? this.accentDark,
-      background: background ?? this.background,
-      backgroundSub: backgroundSub ?? this.backgroundSub,
-      scaffold: scaffold ?? this.scaffold,
-      scaffoldDark: scaffoldDark ?? this.scaffoldDark,
-      text: text ?? this.text,
-      textSub: textSub ?? this.textSub,
-      textSub2: textSub2 ?? this.textSub2,
-      shadow: shadow ?? this.shadow,
-      shadowSub: shadowSub ?? this.shadowSub,
-    );
-  }
+    Color? shadow, // Normal shadow on background
+    Color? shadowSub, // Light shadow
+  }) = _AppCoreTheme;
+
+// Optionally, you can define any additional methods here
 }

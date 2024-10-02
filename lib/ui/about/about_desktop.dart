@@ -62,8 +62,8 @@ class AboutDesktop extends StatelessWidget {
                       Space.y!,
                       Text(
                         'Technologies I have worked with:',
-                        style: AppText.l1!.copyWith(
-                          color: AppTheme.c!.primary,
+                        style: AppText.l1b!.copyWith(
+                          color: AppTheme.currentTheme!.primary,
                         ),
                       ),
                       Space.y!,

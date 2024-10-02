@@ -1,6 +1,6 @@
 class AboutUtils {
   static const String aboutMeHeadline =
-      'I\'m Amit Kumar Tiwari, a Mobile Application Developer (Flutter / Compose Multiplatform / Android) .';
+      'I\'m Amit Kumar Tiwari a Mobile Application Developer';
 
   static const String aboutMeDetail =
       "Hi there! I’m a dedicated mobile developer with 10 years of experience specializing in both native Android and cross-platform applications using Flutter and Compose Multiplatform. "

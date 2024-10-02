@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:portfolio/bloc/ThemeCubit.dart';
 import 'package:portfolio/configs/configs.dart';
-
-import 'package:provider/provider.dart';
 
 import '../utils/export.dart';
 
@@ -35,7 +35,7 @@ class ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
+    final themeCubit = context.read<ThemeCubit>();
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -61,7 +61,9 @@ class ProjectCardState extends State<ProjectCard> {
         }
       },
       child: Card(
-        color: appProvider.isDark ? Colors.grey[900] : Colors.white,
+        color: themeCubit.state.themeMode == ThemeMode.dark
+            ? Colors.grey[900]
+            : Colors.white,
         elevation: 1,
         borderOnForeground: true,
         shape: const RoundedRectangleBorder(
@@ -107,7 +109,7 @@ class ProjectCardState extends State<ProjectCard> {
                   widget.projectIconData != null
                       ? Icon(
                           widget.projectIconData,
-                          color: AppTheme.c!.primary!,
+                          color: AppTheme.currentTheme!.primary!,
                           size: height * 0.1,
                         )
                       : Container(),

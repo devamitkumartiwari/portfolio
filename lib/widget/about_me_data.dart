@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:portfolio/configs/app_typography.dart';
-import 'package:portfolio/provider/app_provider.dart';
-import 'package:provider/provider.dart';
+import '../bloc/ThemeCubit.dart';
 
 class AboutMeData extends StatelessWidget {
   final String data;
@@ -16,7 +16,7 @@ class AboutMeData extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context);
+    final themeCubit = context.watch<ThemeCubit>();
 
     return Align(
       alignment: alignment ?? Alignment.center,
@@ -26,13 +26,17 @@ class AboutMeData extends StatelessWidget {
             TextSpan(
               text: "$data: ",
               style: AppText.l1b!.copyWith(
-                color: appProvider.isDark ? Colors.white : Colors.black,
+                color: themeCubit.state.themeMode == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
               ),
             ),
             TextSpan(
               text: " $information\n",
               style: AppText.l1!.copyWith(
-                color: appProvider.isDark ? Colors.white : Colors.black,
+                color: themeCubit.state.themeMode == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black,
               ),
             ),
           ],

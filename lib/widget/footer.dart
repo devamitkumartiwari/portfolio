@@ -24,7 +24,7 @@ class Footer extends StatelessWidget {
                   "https://github.com/devamitkumartiwari?tab=repositories"),
               child: const Text(
                 "Flutter",
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: Color(0xFF009688)),
               ),
             )
           ],

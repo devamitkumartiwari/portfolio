@@ -9,9 +9,8 @@ class NavBarUtils {
   ];
 
   static const List<IconData> icons = [
-    Icons.home,
-    Icons.person,
-    Icons.build,
+    Icons.home_filled,
+    Icons.person_2_outlined,
     Icons.settings,
     Icons.contact_page,
   ];
