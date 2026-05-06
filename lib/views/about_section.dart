@@ -1,5 +1,7 @@
+import 'package:devamitkumartiwari/core/responsive.dart';
+import 'package:devamitkumartiwari/widgets/section_fade.dart';
+import 'package:devamitkumartiwari/widgets/section_heading.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/hover_chip.dart';
 
@@ -8,150 +10,97 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
+    final hPadding = context.sectionPadding;
+
     return Container(
-      key: key,
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: 80, horizontal: hPadding),
       width: double.infinity,
-      color: Theme.of(context).colorScheme.secondary.withAlpha(25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'About Me',
-            style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.headlineMedium,
-                fontSize: 26,
-                fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "I'm Amit Kumar Tiwari, A Flutter and Android Developer and Technical Consultant",
-            style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.headlineMedium,
+      color: scheme.surfaceContainerLow,
+      child: SectionFadeIn(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SectionHeading(title: 'About Me'),
+            const SizedBox(height: 20),
+            Text(
+              "Senior Mobile & Full-Stack Architect with 10+ years of experience",
+              style: textTheme.headlineSmall?.copyWith(
                 fontSize: 20,
-                fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "I have done my Computer Science and Engineering on 2014. I have been developing Mobile Apps for more than 9 years now. I have worked as a Team and as an Individual in various organization and launched the apps in Play Store as well as in Appstore. In my free time I use to write Technical Blog in Medium. Always love to learn new technologies and to succeed in an environment of growth and excellence and earn a job which provides me job satisfaction and self-development and help me achieve personal as well as organisational goals.",
-            style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.bodyLarge,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "I'm Amit Kumar Tiwari — a Senior Full-Stack Mobile Architect specialising in fintech, secure digital identity, and AI-driven applications. I completed my B.Tech in Computer Science in 2014 and have spent over a decade building production-grade mobile systems.\n\nI've architected fintech platforms supporting 100K+ users and microservices handling 1M+ monthly transactions. I'm an expert in UAE PASS KYC (SOP1–SOP3), payment gateway integrations (Stripe, Razorpay, QPay, Lean, SmartPay, OAB), and VAPT-compliant mobile architectures with AES-256 encryption, SSL pinning, and biometric authentication.\n\nMore recently I've been building Agentic AI chatbot systems and AI workflows for automation in enterprise fintech — and shipping Spring Boot microservice APIs that power mobile-first banking experiences.",
+              style: textTheme.bodyLarge?.copyWith(
                 fontSize: 14,
-                fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "Technology I have worked with",
-            style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.titleMedium,
+                fontWeight: FontWeight.w400,
+                height: 1.8,
+              ),
+            ),
+            const SizedBox(height: 28),
+            Text(
+              "Technologies & Expertise",
+              style: textTheme.titleMedium?.copyWith(
                 fontSize: 16,
-                fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 24,
-            runSpacing: 16,
-            alignment: WrapAlignment.start,
-            children: [
-              HoverChip(
-                label: Text(
-                  'Flutter',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
+                fontWeight: FontWeight.w600,
               ),
-              HoverChip(
-                label: Text(
-                  'Compose Multiplatform',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              HoverChip(
-                label: Text(
-                  'Native Android',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              HoverChip(
-                label: Text(
-                  'Native iOS',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-
-              HoverChip(
-                label: Text(
-                  'Spring Boot',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-
-              HoverChip(
-                label: Text(
-                  'Java',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-
-              HoverChip(
-                label: Text(
-                  'Kotlin',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-
-              HoverChip(
-                label: Text(
-                  'Dart',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              HoverChip(
-                label: Text(
-                  'Java Script',
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.titleMedium,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-
-
-              // Chip(label: Text('Flutter')),
-              // Chip(label: Text('Compose Multiplatform')),
-              // Chip(label: Text('Native Android')),
-              // Chip(label: Text('Native iOS')),
-              // Chip(label: Text('Spring Boot')),
-              // Chip(label: Text('Java')),
-              // Chip(label: Text('Kotlin')),
-              // Chip(label: Text('Dart')),
-              // Chip(label: Text('Java Script')),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              alignment: WrapAlignment.start,
+              children: [
+                // Mobile
+                'Flutter',
+                'Android SDK',
+                'Kotlin',
+                'Swift',
+                'Jetpack Compose',
+                // Backend
+                'Spring Boot',
+                'Microservices',
+                'REST APIs',
+                // AI
+                'Agentic AI',
+                'AI Workflows',
+                // Languages
+                'Dart',
+                'Java',
+                'SQL',
+                // Architecture
+                'Clean Architecture',
+                'MVVM',
+                'BLoC',
+                // Payments
+                'Stripe',
+                'Razorpay',
+                'QPay',
+                // Security
+                'OWASP',
+                'AES-256',
+                'SSL Pinning',
+                'UAE PASS',
+                // Maps
+                'Google Maps',
+                'Geofencing',
+              ].map((tech) {
+                return HoverChip(
+                  label: Text(
+                    tech,
+                    style: textTheme.labelLarge?.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
-
+import 'package:devamitkumartiwari/core/responsive.dart';
+import 'package:devamitkumartiwari/widgets/section_fade.dart';
+import 'package:devamitkumartiwari/widgets/section_heading.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../models/project.dart';
 import '../utils/app_utils.dart';
@@ -13,34 +14,46 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final hPadding = context.sectionPadding;
+    final isMobile = context.isMobile;
+
+    final cards = projects.map((project) {
+      return _HoverProjectCard(
+        title: project.title,
+        description: project.description,
+        url: project.projectLink,
+      );
+    }).toList();
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: 80, horizontal: hPadding),
       width: double.infinity,
-      color: Theme.of(context).colorScheme.primary.withAlpha(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Projects',
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headlineMedium,
-              fontSize: 26,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Wrap(
-            spacing: 24,
-            runSpacing: 24,
-            children: projects.map((project) {
-              return _HoverProjectCard(
-                title: project.title,
-                description: project.description,
-                url: project.projectLink,
-              );
-            }).toList(),
-          ),
-        ],
+      color: scheme.surfaceContainerLow,
+      child: SectionFadeIn(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SectionHeading(title: 'Projects'),
+            const SizedBox(height: 24),
+            if (isMobile)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: cards
+                    .map((c) => Padding(
+                          padding: const EdgeInsets.only(bottom: 24),
+                          child: c,
+                        ))
+                    .toList(),
+              )
+            else
+              Wrap(
+                spacing: 24,
+                runSpacing: 24,
+                children: cards,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -66,34 +79,42 @@ class _HoverProjectCardState extends State<_HoverProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
+    final isMobile = context.isMobile;
+
+    final cardWidth = isMobile
+        ? double.infinity
+        : context.isTablet
+            ? 280.0
+            : 300.0;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 300,
+        width: cardWidth,
         decoration: BoxDecoration(
           color: _hovered
-              ? theme.colorScheme.primary.withAlpha((0.07 * 255).round())
-              : theme.cardColor,
+              ? scheme.primaryContainer.withValues(alpha: 0.5)
+              : scheme.surfaceContainerLow,
           borderRadius: BorderRadius.circular(16),
           boxShadow: _hovered
               ? [
-            const BoxShadow(
-              color: Colors.black12,
-              blurRadius: 18,
-              offset: Offset(0, 6),
-            )
-          ]
+                  BoxShadow(
+                    color: scheme.primary.withValues(alpha: 0.15),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  )
+                ]
               : [
-            const BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 3),
-            )
-          ],
+                  const BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  )
+                ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -102,18 +123,19 @@ class _HoverProjectCardState extends State<_HoverProjectCard> {
             children: [
               Text(
                 widget.title,
-                style: GoogleFonts.poppins(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600),
+                style: textTheme.titleLarge?.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 widget.description,
-                style: GoogleFonts.poppins(
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500),
+                style: textTheme.bodyMedium?.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  height: 1.6,
+                ),
               ),
               const SizedBox(height: 16),
               Align(

@@ -5,7 +5,6 @@ class AnimatedCamelCaseText extends StatefulWidget {
   final Color backgroundColor;
   final TextStyle? textStyle;
 
-  // Constructor with optional params for bg color and text style
   const AnimatedCamelCaseText({
     super.key,
     required this.text,
@@ -17,10 +16,13 @@ class AnimatedCamelCaseText extends StatefulWidget {
   State<AnimatedCamelCaseText> createState() => _AnimatedCamelCaseTextState();
 }
 
-class _AnimatedCamelCaseTextState extends State<AnimatedCamelCaseText> with TickerProviderStateMixin {
+class _AnimatedCamelCaseTextState extends State<AnimatedCamelCaseText>
+    with TickerProviderStateMixin {
   late final List<String> _words;
   late final List<AnimationController> _controllers;
   late final List<Animation<double>> _animations;
+  // Pre-built static children — not rebuilt on each animation tick
+  late final List<Widget> _wordWidgets;
 
   @override
   void initState() {
@@ -35,8 +37,19 @@ class _AnimatedCamelCaseTextState extends State<AnimatedCamelCaseText> with Tick
     }).toList();
 
     _animations = _controllers.map((controller) {
-      return CurvedAnimation(parent: controller, curve: Curves.easeInOut);
+      return CurvedAnimation(parent: controller, curve: Curves.easeOut);
     }).toList();
+
+    _wordWidgets = List.generate(_words.length, (i) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: widget.backgroundColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(_words[i], style: widget.textStyle),
+      );
+    });
 
     for (int i = 0; i < _controllers.length; i++) {
       Future.delayed(Duration(milliseconds: i * 300), () {
@@ -55,34 +68,14 @@ class _AnimatedCamelCaseTextState extends State<AnimatedCamelCaseText> with Tick
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: List.generate(_words.length, (i) {
-        return AnimatedBuilder(
-          animation: _animations[i],
-          builder: (context, child) {
-            return Opacity(
-              opacity: _animations[i].value,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: widget.backgroundColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  _words[i],
-                  style: widget.textStyle ??
-                      theme.textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                ),
-              ),
-            );
-          },
+        // FadeTransition composites on the GPU layer — child never rebuilt
+        return FadeTransition(
+          opacity: _animations[i],
+          child: _wordWidgets[i],
         );
       }),
     );

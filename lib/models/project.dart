@@ -6,7 +6,6 @@ class ProjectModel {
   final String? appPhotos;
   final String projectLink;
   final bool internalLink;
-
   final String? buttonText;
 
   ProjectModel({
@@ -24,39 +23,34 @@ class ProjectModel {
       project: "Flutter Package",
       title: "Device Safety Info",
       description:
-          "This Plugin used to find Flutter JailBreak, Rooted, Emulator/Simulator, External storage and Screen Lock detection.",
+          "A Flutter plugin for runtime device security checks — jailbreak/root detection, emulator detection, external storage access, and screen lock status. Used in VAPT-compliant fintech apps.",
       projectLink: "https://pub.dev/packages/device_safety_info",
-
-      buttonText: "Pub Dev",
+      buttonText: "View on Pub Dev",
     ),
     ProjectModel(
       project: "Flutter Package",
       title: "File Saver Plus",
       description:
-      "FileSaverPlus is a mobile application that allows users to save and manage files efficiently on their devices.",
+          "A Flutter plugin enabling efficient file saving and management across Android and iOS, with support for custom paths and media types. Handles edge cases for scoped storage on Android 10+.",
       projectLink: "https://pub.dev/packages/filesaverplus",
-
-      buttonText: "Pub Dev",
+      buttonText: "View on Pub Dev",
     ),
     ProjectModel(
       project: "Flutter Package",
       title: "Awesome Custom Dialog",
       description:
-      "This Plugin used to design custom dialogs in flutter.",
+          "A highly customisable Flutter dialog package with support for animations, custom content, multiple action buttons, and theme-aware styling — designed to drop into any production app.",
       projectLink: "https://pub.dev/packages/awesome_custom_dialog",
-
-      buttonText: "Pub Dev",
+      buttonText: "View on Pub Dev",
     ),
     ProjectModel(
       project: "Flutter Package",
       title: "SVG Image Flutter",
       description:
-      "This Plugin used to integrate SVG images in flutter app.",
+          "A lightweight Flutter plugin for rendering SVG images from assets, network, and memory sources — with caching support and fallback handling for production reliability.",
       projectLink: "https://pub.dev/packages/svg_image_flutter",
-
-      buttonText: "Pub Dev",
+      buttonText: "View on Pub Dev",
     ),
-
   ];
 
   static List<ProjectModel> demos = [
@@ -65,7 +59,7 @@ class ProjectModel {
       title: "Portfolio",
       description: "",
       projectLink: "https://amitkumartiwarimobiledeveloper.web.app/",
-      buttonText: "Github Link",
+      buttonText: "Live Site",
     ),
   ];
 }

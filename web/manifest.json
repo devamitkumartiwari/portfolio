@@ -1,11 +1,11 @@
 {
-    "name": "devamitkumartiwari",
-    "short_name": "devamitkumartiwari",
+    "name": "Amit Kumar Tiwari — Portfolio",
+    "short_name": "AKT Portfolio",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0061A4",
+    "theme_color": "#0061A4",
+    "description": "Amit Kumar Tiwari — Flutter & Android Developer Portfolio. 9+ years building mobile and web apps.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

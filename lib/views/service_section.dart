@@ -1,58 +1,72 @@
-
+import 'package:devamitkumartiwari/core/responsive.dart';
+import 'package:devamitkumartiwari/widgets/section_fade.dart';
+import 'package:devamitkumartiwari/widgets/section_heading.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final hPadding = context.sectionPadding;
+    final isMobile = context.isMobile;
+
+    const cards = [
+      _HoverServiceCard(
+        icon: Icons.account_balance_wallet_outlined,
+        title: 'Fintech Mobile Development',
+        description:
+            'Building secure, high-performance fintech apps for Android and iOS — UAE PASS KYC (SOP1–SOP3), biometric auth, payment integrations (Stripe, Razorpay, QPay, Lean), and VAPT-compliant architectures supporting 100K+ users.',
+      ),
+      _HoverServiceCard(
+        icon: Icons.dns_outlined,
+        title: 'Spring Boot API & Microservices',
+        description:
+            'Designing and deploying scalable REST APIs and microservices handling 1M+ monthly transactions, with AES-256 encryption, SSL pinning, and deep integrations with OAB, SmartPay, and banking APIs.',
+      ),
+      _HoverServiceCard(
+        icon: Icons.auto_awesome_outlined,
+        title: 'AI Systems & Agentic Chatbots',
+        description:
+            'Building Agentic AI chatbot systems and AI-driven automation workflows for enterprise fintech — reducing manual processes, improving user interaction, and enabling intelligent decision pipelines.',
+      ),
+      _HoverServiceCard(
+        icon: Icons.security_outlined,
+        title: 'Security & Compliance',
+        description:
+            'Implementing OWASP-aligned mobile security: AES-256 encryption, SSL pinning, certificate transparency, biometric authentication, jailbreak/root detection, and full VAPT compliance auditing.',
+      ),
+    ];
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: 80, horizontal: hPadding),
       width: double.infinity,
-      color: Theme.of(context).colorScheme.secondary.withAlpha((0.05 * 255).round()),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Services',
-            style: GoogleFonts.poppins(
-              textStyle: Theme.of(context).textTheme.headlineMedium,
-              fontSize: 26,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 24),
-          const Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            children: [
-              _HoverServiceCard(
-                icon: Icons.smartphone,
-                title: 'Mobile App Design & Development',
-                description:
-                'Designing and developing sleek, responsive, and high-performance mobile applications tailored for both Android and iOS platforms.',
+      color: scheme.surface,
+      child: SectionFadeIn(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SectionHeading(title: 'Services'),
+            const SizedBox(height: 24),
+            if (isMobile)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: cards
+                    .map((c) => Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: c,
+                        ))
+                    .toList(),
+              )
+            else
+              const Wrap(
+                spacing: 20,
+                runSpacing: 20,
+                children: cards,
               ),
-              _HoverServiceCard(
-                icon: Icons.code,
-                title: 'Web Development',
-                description:
-                'Building dynamic and scalable web solutions using Spring Boot REST APIs, React.js for responsive frontends, and Flutter Web for seamless cross-platform experiences.',
-              ),
-              _HoverServiceCard(
-                icon: Icons.design_services,
-                title: 'Design UI & UX',
-                description:
-                'Designing intuitive and engaging user interfaces using Figma, tailored for Flutter apps across Android, iOS, and Web platforms.',
-              ),
-              _HoverServiceCard(
-                icon: Icons.analytics,
-                title: 'Analytics',
-                description: 'Tracking and improving app performance.',
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -78,66 +92,72 @@ class _HoverServiceCardState extends State<_HoverServiceCard> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
+    final isMobile = context.isMobile;
+
+    final cardWidth = isMobile
+        ? double.infinity
+        : context.isTablet
+            ? 260.0
+            : 280.0;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        width: 280,
+        width: cardWidth,
         decoration: BoxDecoration(
           color: _isHovered
-              ? theme.colorScheme.primary.withAlpha((0.08 * 255).round())
-              : theme.cardColor,
+              ? scheme.primaryContainer.withValues(alpha: 0.5)
+              : scheme.surfaceContainerLow,
           borderRadius: BorderRadius.circular(16),
           boxShadow: _isHovered
               ? [
-            const BoxShadow(
-              color: Colors.black12,
-              blurRadius: 16,
-              offset: Offset(0, 8),
-            )
-          ]
+                  BoxShadow(
+                    color: scheme.primary.withValues(alpha: 0.15),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  )
+                ]
               : [
-            const BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              offset: Offset(0, 3),
-            )
-          ],
+                  const BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 6,
+                    offset: Offset(0, 3),
+                  )
+                ],
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {}, // Optional: Make cards clickable
+          onTap: () {},
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
-
-                Text(
-                  widget.title,
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.bodyLarge,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
                 Icon(
                   widget.icon,
                   size: 48,
-                  color: Colors.pink.withAlpha((0.5 * 255).round()),
-                  // color: theme.colorScheme.primary,
+                  color: scheme.primary,
                 ),
-
                 const SizedBox(height: 16),
                 Text(
+                  widget.title,
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
                   widget.description,
-                  style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context).textTheme.bodyLarge,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500),
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    height: 1.6,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
