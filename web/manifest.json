@@ -1,11 +1,11 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Amit Kumar Tiwari | Full Stack Developer",
+    "short_name": "Amit Tiwari",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0F0F14",
+    "theme_color": "#7C3AED",
+    "description": "Full Stack Developer — Flutter · Java Spring Boot · Native Android",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

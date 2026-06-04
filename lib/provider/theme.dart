@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../core/utils/constants.dart';
 
-
-final themeProvider = ChangeNotifierProvider(((ref) => CustomThemeProvider()));
+final themeProvider = ChangeNotifierProvider((_) => CustomThemeProvider());
 
 class CustomThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.dark;
+  ThemeMode themeMode = ThemeMode.light;
 
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
@@ -24,23 +24,28 @@ class CustomThemeProvider extends ChangeNotifier {
 
 class MyThemes {
   static final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.pink.shade50,
-    colorScheme: const ColorScheme.light(),
-    primaryColor: Colors.green.shade800,
-    iconTheme: const IconThemeData(color: kPrimaryColor),
-    primarySwatch: Colors.green,
-    textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.all(kBackgroundColor))),
+    useMaterial3: false,
+    scaffoldBackgroundColor: kLightBg,
+    colorScheme: const ColorScheme.light(
+      primary: kAccent,
+      secondary: kAccentCyan,
+      surface: kLightSurface,
+    ),
+    textTheme: GoogleFonts.outfitTextTheme(ThemeData.light().textTheme),
+    iconTheme: const IconThemeData(color: kAccent),
+    dividerColor: kLightBorder,
   );
+
   static final darkTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.black87,
-      colorScheme: const ColorScheme.dark(),
-      primarySwatch: Colors.green,
-      primaryColor: Colors.green.shade800,
-      iconTheme: IconThemeData(color: Colors.grey[400]),
-      textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all(Colors.pink.shade50),
-      )));
+    useMaterial3: false,
+    scaffoldBackgroundColor: kDarkBg,
+    colorScheme: const ColorScheme.dark(
+      primary: kAccent,
+      secondary: kAccentCyan,
+      surface: kDarkSurface,
+    ),
+    textTheme: GoogleFonts.outfitTextTheme(ThemeData.dark().textTheme),
+    iconTheme: const IconThemeData(color: kAccent),
+    dividerColor: kDarkBorder,
+  );
 }

@@ -1,81 +1,138 @@
-
-
 import '../core/utils/constants.dart';
 import 'link.dart';
 import 'technology.dart';
 
+// ── Project key — used to look up translated badge + description ───────────────
+enum ProjectKey {
+  healthcare,
+  ecommerce,
+  fintech,
+  remittance,
+  forex,
+  fintechSecurity,
+  flutterSafety,
+  flutterDialog,
+  flutterSvg,
+  androidArch,
+  springApi,
+  portfolio,
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 class ProjectModel {
-  final String project;
+  final ProjectKey key;
   final String title;
-  final String description;
   final String? appPhotos;
   final String projectLink;
   final bool internalLink;
   final List<TechnologyModel> techUsed;
   List<LinkModel>? links = [];
-  final String? buttonText;
 
   ProjectModel({
-    required this.project,
+    required this.key,
     required this.title,
-    required this.description,
     this.appPhotos,
     required this.projectLink,
     this.internalLink = false,
     required this.techUsed,
-    this.buttonText,
     this.links,
   });
 
+  // ── All projects — sector projects first (home page shows take(4)) ───────────
   static List<ProjectModel> projects = [
     ProjectModel(
-      project: "Flutter Package",
+      key: ProjectKey.healthcare,
+      title: "MediConnect",
+      appPhotos: AppConstants.iosImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.flutter, TechnologyConstants.springBoot],
+    ),
+    ProjectModel(
+      key: ProjectKey.ecommerce,
+      title: "ShopNow",
+      appPhotos: AppConstants.androidImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.flutter, TechnologyConstants.kotlin],
+    ),
+    ProjectModel(
+      key: ProjectKey.fintech,
+      title: "PaySwift",
+      appPhotos: AppConstants.kotlinImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.flutter, TechnologyConstants.java],
+    ),
+    ProjectModel(
+      key: ProjectKey.remittance,
+      title: "RemitGo",
+      appPhotos: AppConstants.springImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.springBoot, TechnologyConstants.kotlin],
+    ),
+    ProjectModel(
+      key: ProjectKey.forex,
+      title: "ForexPro",
+      appPhotos: AppConstants.javaImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.nativeAndroid, TechnologyConstants.java],
+    ),
+    ProjectModel(
+      key: ProjectKey.fintechSecurity,
+      title: "SecureBank SDK",
+      appPhotos: AppConstants.flutterImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.flutter, TechnologyConstants.kotlin],
+    ),
+    ProjectModel(
+      key: ProjectKey.flutterSafety,
       title: "device_safety_info",
-      description:
-          "This Plugin used to find Flutter JailBreak, Rooted, Emulator/Simulator, External storage and Screen Lock detection.",
       appPhotos: AppConstants.flutterImage,
       projectLink: "https://pub.dev/packages/device_safety_info",
-      techUsed: [
-        TechnologyConstants.flutter,
-      ],
-      buttonText: "Pub Dev",
+      techUsed: [TechnologyConstants.flutter],
     ),
     ProjectModel(
-      project: "Flutter Package",
+      key: ProjectKey.flutterDialog,
       title: "awesome_custom_dialog",
-      description:
-      "This Plugin used to design custom dialogs in flutter.",
       appPhotos: AppConstants.flutterImage,
       projectLink: "https://pub.dev/packages/awesome_custom_dialog",
-      techUsed: [
-        TechnologyConstants.flutter,
-      ],
-      buttonText: "Pub Dev",
+      techUsed: [TechnologyConstants.flutter],
     ),
     ProjectModel(
-      project: "Flutter Package",
+      key: ProjectKey.flutterSvg,
       title: "svg_image_flutter",
-      description:
-      "This Plugin used to integrate SVG images in flutter app.",
       appPhotos: AppConstants.flutterImage,
       projectLink: "https://pub.dev/packages/svg_image_flutter",
-      techUsed: [
-        TechnologyConstants.flutter,
-      ],
-      buttonText: "Pub Dev",
+      techUsed: [TechnologyConstants.flutter],
     ),
-
+    ProjectModel(
+      key: ProjectKey.androidArch,
+      title: "Android Architecture Series",
+      appPhotos: AppConstants.androidImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.nativeAndroid, TechnologyConstants.kotlin, TechnologyConstants.java],
+    ),
+    ProjectModel(
+      key: ProjectKey.springApi,
+      title: "REST API Boilerplate",
+      appPhotos: AppConstants.springImage,
+      projectLink: "https://github.com/amitkumartiwaridis",
+      techUsed: [TechnologyConstants.springBoot, TechnologyConstants.java],
+    ),
+    ProjectModel(
+      key: ProjectKey.portfolio,
+      title: "Portfolio Website",
+      appPhotos: AppConstants.flutterImage,
+      projectLink: "https://amitkumartiwarimobiledeveloper.web.app/",
+      techUsed: [TechnologyConstants.flutter],
+    ),
   ];
 
   static List<ProjectModel> demos = [
     ProjectModel(
-      project: "Portfolio",
+      key: ProjectKey.portfolio,
       title: "Portfolio",
-      description: "",
       appPhotos: AppConstants.portfolioGif,
       projectLink: "https://amitkumartiwarimobiledeveloper.web.app/",
       techUsed: [],
-      buttonText: "Github Link",
     ),
   ];
 }

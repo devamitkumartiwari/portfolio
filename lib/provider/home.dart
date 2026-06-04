@@ -50,19 +50,15 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  scrollBasedOnHeader(NameOnTap nameOnTap) {
-    if (nameOnTap.title == "Contact") {
-      scrollToContact();
-    } else if (nameOnTap.title == "Home") {
-      scrollToHome();
-    } else if (nameOnTap.title == "Services") {
-      scrollToService();
-    } else if (nameOnTap.title == "Works") {
-      scrollToPortfolio();
-    } else if (nameOnTap.title == "About") {
-      scrollToAbout();
-    } else if (nameOnTap.title == "Blog") {
-      Utilty.openUrl(AppConstants.mediumUrl);
+  void scrollBasedOnHeader(NameOnTap nameOnTap) {
+    switch (nameOnTap.section) {
+      case NavSection.home:     scrollToHome();
+      case NavSection.about:    scrollToAbout();
+      case NavSection.skills:   scrollToService();
+      case NavSection.projects: scrollToPortfolio();
+      case NavSection.contact:  scrollToContact();
+      case NavSection.blog:     Utilty.openUrl(AppConstants.mediumUrl);
+      case NavSection.none:     break;
     }
   }
 }

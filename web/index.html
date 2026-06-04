@@ -1,59 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-  <!-- iOS meta tags & icons -->
+  <!-- Font preconnect — reduces Google Fonts cold-start latency -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+  <!-- Primary SEO -->
+  <title>Amit Kumar Tiwari | Full Stack Developer — Flutter · Java Spring Boot · Android</title>
+  <meta name="description" content="Amit Kumar Tiwari — Full Stack Developer with 10+ years building production mobile and backend apps. Expert in Flutter, Java Spring Boot, Native Android, Fintech Security, OWASP, and VAPT.">
+  <meta name="keywords" content="Flutter developer, Android developer, full stack developer, Java Spring Boot, Kotlin, mobile architect, Fintech security, OWASP, VAPT, pub.dev packages, Amit Kumar Tiwari, Lucknow India">
+  <meta name="author" content="Amit Kumar Tiwari">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://hireamit.web.app/">
+
+  <!-- Geo -->
+  <meta name="geo.region" content="IN-UP">
+  <meta name="geo.placename" content="Lucknow, Uttar Pradesh, India">
+  <meta name="geo.position" content="26.8467;80.9462">
+  <meta name="ICBM" content="26.8467, 80.9462">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hireamit.web.app/">
+  <meta property="og:title" content="Amit Kumar Tiwari | Full Stack Developer — Flutter · Spring Boot · Android">
+  <meta property="og:description" content="Full Stack Developer with 10+ years experience building production apps for millions of users. Flutter, Java Spring Boot, Native Android, Fintech Security.">
+  <meta property="og:image" content="https://hireamit.web.app/icons/Icon-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="Amit Kumar Tiwari — Full Stack Developer Portfolio">
+  <meta property="og:site_name" content="Amit Kumar Tiwari Portfolio">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@amtechnovation">
+  <meta name="twitter:creator" content="@amtechnovation">
+  <meta name="twitter:title" content="Amit Kumar Tiwari | Full Stack Developer — Flutter · Spring Boot · Android">
+  <meta name="twitter:description" content="Full Stack Developer with 10+ years experience. Flutter, Java Spring Boot, Native Android, Fintech Security, OWASP, VAPT.">
+  <meta name="twitter:image" content="https://hireamit.web.app/icons/Icon-512.png">
+
+  <!-- Theme / PWA -->
+  <meta name="theme-color" content="#7C3AED">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="portfolio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Amit Kumar Tiwari">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>portfolio</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="manifest" href="manifest.json">
 
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Amit Kumar Tiwari",
+    "url": "https://hireamit.web.app/",
+    "image": "https://hireamit.web.app/icons/Icon-512.png",
+    "jobTitle": "Full Stack Developer — Flutter · Java Spring Boot · Native Android",
+    "description": "Full Stack Developer with 10+ years of professional experience architecting mobile and backend products. Specialist in Flutter, Java Spring Boot, Native Android (Java/Kotlin), Fintech security, OWASP Mobile Top 10, and VAPT.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lucknow",
+      "addressRegion": "Uttar Pradesh",
+      "addressCountry": "IN"
+    },
+    "email": "amtechnovation@gmail.com",
+    "telephone": "+91-9871192371",
+    "sameAs": [
+      "https://www.linkedin.com/in/beingamitkumartiwari/",
+      "https://github.com/amitkumartiwaridis",
+      "https://medium.com/@amtechnovation",
+      "https://pub.dev/publishers/amtechnovation.com/packages"
+    ],
+    "knowsAbout": [
+      "Flutter", "Dart", "Android", "Kotlin", "Java",
+      "Java Spring Boot", "REST APIs", "Microservices",
+      "iOS", "JavaScript", "Firebase",
+      "Fintech Security", "OWASP Mobile Top 10",
+      "VAPT", "Penetration Testing", "Data Encryption",
+      "AES-256", "SSL Certificate Pinning", "AI Integration"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "professional enquiries",
+      "email": "amtechnovation@gmail.com",
+      "availableLanguage": ["English", "Hindi"]
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Flutter Cross-Platform Development",
+        "description": "Beautiful, performant cross-platform apps for iOS, Android and Web using Flutter."
+      },
+      {
+        "@type": "Offer",
+        "name": "Java Spring Boot Backend Development",
+        "description": "RESTful APIs, microservices and scalable server-side solutions with Java Spring Boot."
+      },
+      {
+        "@type": "Offer",
+        "name": "Native Android Development",
+        "description": "Production-grade Android apps in Java and Kotlin with Jetpack components."
+      }
+    ]
+  }
   </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+
 </head>
 <body>
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script>
+  <!-- SEO fallback: readable by crawlers that don't execute JS / canvas -->
+  <noscript>
+    <div style="font-family:sans-serif;max-width:860px;margin:48px auto;padding:24px;line-height:1.7">
+      <h1>Amit Kumar Tiwari — Full Stack Developer</h1>
+      <p>10+ years architecting production mobile and backend applications with Flutter, Java Spring Boot, and Native Android. Based in Lucknow, India. Available for freelance projects worldwide.</p>
+
+      <h2>What I Build</h2>
+      <ul>
+        <li><strong>Flutter</strong> — cross-platform iOS, Android &amp; Web apps</li>
+        <li><strong>Native Android</strong> — Java &amp; Kotlin with Jetpack &amp; Compose</li>
+        <li><strong>Java Spring Boot</strong> — RESTful APIs, microservices, Docker</li>
+        <li><strong>Fintech Security</strong> — OWASP Mobile Top 10, VAPT, AES-256, SSL pinning</li>
+        <li><strong>AI / ML Integration</strong> — on-device and cloud inference</li>
+      </ul>
+
+      <h2>Open Source (pub.dev)</h2>
+      <ul>
+        <li>device_safety_info — jailbreak &amp; root detection for Flutter</li>
+        <li>awesome_custom_dialog — animated dialog library</li>
+        <li>svg_image_flutter — lightweight SVG renderer</li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>
+        Email: <a href="mailto:amtechnovation@gmail.com">amtechnovation@gmail.com</a><br>
+        Phone / WhatsApp: +91 9871192371<br>
+        Location: Lucknow, Uttar Pradesh, India
+      </p>
+      <p>
+        <a href="https://www.linkedin.com/in/beingamitkumartiwari/">LinkedIn</a> &nbsp;|&nbsp;
+        <a href="https://github.com/amitkumartiwaridis">GitHub</a> &nbsp;|&nbsp;
+        <a href="https://medium.com/@amtechnovation">Medium Blog</a>
+      </p>
+    </div>
+  </noscript>
+
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

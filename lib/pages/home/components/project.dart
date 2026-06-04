@@ -3,187 +3,184 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/l10n/locale_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/screen_helper.dart';
 import '../../../core/utils/utils.dart';
 import '../../../models/project.dart';
 import '../../../provider/theme.dart';
 
-
 class ProjectSection extends StatelessWidget {
   final List<ProjectModel> projects;
-  const ProjectSection({Key? key, required this.projects}) : super(key: key);
+  const ProjectSection({super.key, required this.projects});
 
   @override
   Widget build(BuildContext context) {
-    return ScreenHelper(
-      desktop: _buildUi(kDesktopMaxWidth, context),
-      tablet: _buildUi(kTabletMaxWidth, context),
-      mobile: _buildUi(getMobileMaxWidth(context), context),
-    );
-  }
+    return Consumer(builder: (context, ref, _) {
+      final isDark   = ref.watch(themeProvider).isDarkMode;
+      final isMobile = ScreenHelper.isMobile(context);
 
-  Widget _buildUi(double width, BuildContext context) {
-    return ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: projects
-              .map((e) => Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 15,
-                  ),
-                  child: _buildProject(width, e)))
-              .toList(),
-        ),
-      ),
-    );
-  }
+      return PageWrapper(
+        extraPadding: EdgeInsets.symmetric(horizontal: isMobile ? 24 : 40),
+        child: LayoutBuilder(builder: (context, constraints) {
+          final cols      = isMobile ? 1 : 2;
+          final cardWidth = (constraints.maxWidth - (cols - 1) * 20) / cols;
 
-  Center _buildProject(double width, ProjectModel projectModel) {
-    return Center(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SizedBox(
-            width: width,
-            child: Consumer(builder: (context, ref, _) {
-              return Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    color: ref.watch(themeProvider).isDarkMode
-                        ? const Color.fromARGB(75, 12, 12, 7)
-                        : Colors.grey[100],
-                    borderRadius: BorderRadius.circular(5)),
-                child: Flex(
-                  direction: ScreenHelper.isMobile(context)
-                      ? Axis.vertical
-                      : Axis.horizontal,
-                  children: [
-                    if (projectModel.appPhotos != null)
-                      SizedBox(
-                        width: ScreenHelper.isMobile(context)
-                            ? width * 0.9
-                            : width * 0.46,
-                        child: Image.asset(
-                          projectModel.appPhotos!,
-                          width: constraints.maxWidth > 720.0 ? null : 350.0,
-                          height: 250,
-                        ),
-                      ),
-
-                    const SizedBox(
-                      width: 20,
-                      height: 20,
-                    ),
-                    SizedBox(
-                      width: ScreenHelper.isMobile(context)
-                          ? width * 0.9
-                          : width * 0.45,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            projectModel.project,
-                            style: GoogleFonts.josefinSans(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          Text(
-                            projectModel.title,
-                            style: GoogleFonts.josefinSans(
-                              fontWeight: FontWeight.w900,
-                              height: 1.3,
-                              fontSize: 28.0,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            projectModel.description,
-                            style: const TextStyle(
-                              color: kCaptionColor,
-                              height: 1.5,
-                              fontSize: 15.0,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          projectModel.techUsed.isEmpty
-                              ? Container()
-                              : Text(
-                                  "Technologies Used",
-                                  style: GoogleFonts.josefinSans(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-
-                          const SizedBox(
-                            height: 25.0,
-                          ),
-                          Row(
-                            children: [
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: SizedBox(
-                                  height: 50,
-                                  child: ElevatedButton(
-                                    style: const ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(
-                                        kPrimaryColor,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (projectModel.internalLink) {
-                                        context
-                                            .goNamed(projectModel.projectLink);
-                                      } else {
-                                        Utilty.openUrl(
-                                            projectModel.projectLink);
-                                      }
-                                    },
-                                    child: Center(
-                                      child: Text(
-                                        (projectModel.buttonText ??
-                                                "Explore more")
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey[800],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                    // Expanded(
-                    //   flex: constraints.maxWidth > 720.0 ? 1 : 0,
-                    //   child: ,
-                    // )
-                  ],
-                ),
-              );
-            }),
+          return Wrap(
+            spacing: 20,
+            runSpacing: 20,
+            children: projects.map((project) => _ProjectCard(
+                  project:   project,
+                  width:     cardWidth,
+                  isDark:    isDark,
+                )).toList(),
           );
+        }),
+      );
+    });
+  }
+}
+
+class _ProjectCard extends ConsumerStatefulWidget {
+  final ProjectModel project;
+  final double width;
+  final bool isDark;
+
+  const _ProjectCard({
+    required this.project,
+    required this.width,
+    required this.isDark,
+  });
+
+  @override
+  ConsumerState<_ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends ConsumerState<_ProjectCard> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final cardColor   = widget.isDark ? kDarkCard   : kLightCard;
+    final borderColor = widget.isDark ? kDarkBorder : kLightBorder;
+    final textColor   = widget.isDark ? kDarkText   : kLightText;
+    final secColor    = widget.isDark ? kDarkTextSec : kLightTextSec;
+
+    final s         = ref.watch(stringsProvider);
+    final localized = s.projectStrings(widget.project.key);
+
+    return MouseRegion(
+      cursor:  SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit:  (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: () {
+          if (widget.project.internalLink) {
+            context.goNamed(widget.project.projectLink);
+          } else {
+            Utilty.openUrl(widget.project.projectLink);
+          }
         },
+        child: AnimatedContainer(
+          duration:   const Duration(milliseconds: 200),
+          width:      widget.width,
+          padding:    const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: _hovered ? kAccent.withValues(alpha: 0.06) : cardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: _hovered ? kAccent.withValues(alpha: 0.5) : borderColor,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ── Sector badge ───────────────────────────────────────────────
+              Container(
+                padding:    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color:        kAccent.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  localized.badge,
+                  style: GoogleFonts.outfit(
+                    color: kAccent, fontSize: 11,
+                    fontWeight: FontWeight.w600, letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // ── App icon ───────────────────────────────────────────────────
+              if (widget.project.appPhotos != null) ...[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    widget.project.appPhotos!,
+                    height: 52, width: 52, fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 14),
+              ],
+
+              // ── Title ──────────────────────────────────────────────────────
+              Text(
+                widget.project.title,
+                style: GoogleFonts.outfit(
+                  fontWeight: FontWeight.w700, fontSize: 17,
+                  color: textColor, height: 1.3,
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // ── Description ────────────────────────────────────────────────
+              Text(
+                localized.desc,
+                style: GoogleFonts.outfit(color: secColor, height: 1.6, fontSize: 13),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 12),
+
+              // ── Tech stack ─────────────────────────────────────────────────
+              if (widget.project.techUsed.isNotEmpty)
+                Wrap(
+                  spacing: 6, runSpacing: 4,
+                  children: widget.project.techUsed.map((t) => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: (widget.isDark ? kDarkBg : kLightBorder).withValues(alpha: 0.8),
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: borderColor.withValues(alpha: 0.6)),
+                    ),
+                    child: Text(
+                      t.name,
+                      style: GoogleFonts.outfit(
+                        fontSize: 10, color: secColor, fontWeight: FontWeight.w500,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
+                  )).toList(),
+                ),
+              const SizedBox(height: 12),
+
+              // ── CTA ────────────────────────────────────────────────────────
+              Row(
+                children: [
+                  Text(
+                    localized.cta,
+                    style: GoogleFonts.outfit(
+                      color: kAccent, fontWeight: FontWeight.w600, fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.arrow_forward_rounded, color: kAccent, size: 14),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

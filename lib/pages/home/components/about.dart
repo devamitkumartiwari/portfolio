@@ -2,174 +2,281 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:responsive_framework/responsive_framework.dart';
-
+import '../../../core/l10n/app_strings.dart';
+import '../../../core/l10n/locale_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/screen_helper.dart';
-import '../../../models/technology.dart';
 import '../../../provider/theme.dart';
 
-class AboutSection extends StatefulWidget {
-  const AboutSection({Key? key}) : super(key: key);
-
-  @override
-  State<AboutSection> createState() => _AboutSectionState();
+// ── Expertise card data (icon + color, labels come from AppStrings) ────────────
+class _ExpertiseItem {
+  final IconData icon;
+  final Color color;
+  final String Function(AppStrings) label;
+  const _ExpertiseItem(this.icon, this.color, this.label);
 }
 
-class _AboutSectionState extends State<AboutSection> {
+const _kExpertise = [
+  _ExpertiseItem(Icons.architecture_rounded,    Color(0xFF7C3AED), _expMobileArch),
+  _ExpertiseItem(Icons.phone_iphone_rounded,    Color(0xFF54C5F8), _expFlutter),
+  _ExpertiseItem(Icons.android_rounded,         Color(0xFF3DDC84), _expAndroid),
+  _ExpertiseItem(Icons.storage_rounded,         Color(0xFF6DB33F), _expSpringBoot),
+  _ExpertiseItem(Icons.security_rounded,        Color(0xFFE74C3C), _expFintechSecurity),
+  _ExpertiseItem(Icons.shield_outlined,         Color(0xFFE67E22), _expOwasp),
+  _ExpertiseItem(Icons.bug_report_outlined,     Color(0xFFE91E63), _expVapt),
+  _ExpertiseItem(Icons.lock_outline_rounded,    Color(0xFF9B59B6), _expEncryption),
+  _ExpertiseItem(Icons.auto_awesome_rounded,    Color(0xFF06B6D4), _expAi),
+];
+
+// label accessor functions — avoids closures in const
+String _expMobileArch(AppStrings s)     => s.expMobileArch;
+String _expFlutter(AppStrings s)        => s.expFlutter;
+String _expAndroid(AppStrings s)        => s.expAndroid;
+String _expSpringBoot(AppStrings s)     => s.expSpringBoot;
+String _expFintechSecurity(AppStrings s)=> s.expFintechSecurity;
+String _expOwasp(AppStrings s)          => s.expOwasp;
+String _expVapt(AppStrings s)           => s.expVapt;
+String _expEncryption(AppStrings s)     => s.expEncryption;
+String _expAi(AppStrings s)             => s.expAi;
+
+// ─────────────────────────────────────────────────────────────────────────────
+class AboutSection extends StatelessWidget {
+  const AboutSection({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ScreenHelper(
-      desktop: _buildUi(kDesktopMaxWidth),
-      tablet: _buildUi(kTabletMaxWidth),
-      mobile: _buildUi(getMobileMaxWidth(context)),
+    return Consumer(builder: (context, ref, _) {
+      final isDark    = ref.watch(themeProvider).isDarkMode;
+      final textColor = isDark ? kDarkText    : kLightText;
+      final secColor  = isDark ? kDarkTextSec : kLightTextSec;
+      final isMobile  = ScreenHelper.isMobile(context);
+      final s         = ref.watch(stringsProvider);
+
+      return PageWrapper(
+        extraPadding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 24 : 40,
+          vertical:   isMobile ? 48 : 80,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              s.aboutLabel,
+              style: GoogleFonts.outfit(
+                color: kAccent, fontSize: 12,
+                fontWeight: FontWeight.w700, letterSpacing: 2.5,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              s.aboutHeading,
+              style: GoogleFonts.outfit(
+                fontWeight: FontWeight.w800,
+                fontSize: isMobile ? 32 : 42,
+                height: 1.15, color: textColor, letterSpacing: -1,
+              ),
+            ),
+            const SizedBox(height: 40),
+
+            // ── Bio ─────────────────────────────────────────────────────────
+            _BioParagraph(s: s, secColor: secColor, textColor: textColor),
+
+            const SizedBox(height: 56),
+
+            // ── Expertise heading ────────────────────────────────────────────
+            Text(
+              s.areasOfExpertise,
+              style: GoogleFonts.outfit(
+                fontSize:   isMobile ? 22 : 26,
+                fontWeight: FontWeight.w800,
+                color:      textColor,
+                letterSpacing: -0.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              s.expertiseSubtitle,
+              style: GoogleFonts.outfit(fontSize: 14, color: secColor),
+            ),
+            const SizedBox(height: 28),
+            _ExpertiseGrid(
+              isMobile:  isMobile,
+              isDark:    isDark,
+              secColor:  secColor,
+              textColor: textColor,
+              strings:   s,
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+// ── Bio paragraph ─────────────────────────────────────────────────────────────
+class _BioParagraph extends StatelessWidget {
+  final AppStrings s;
+  final Color secColor;
+  final Color textColor;
+  const _BioParagraph({required this.s, required this.secColor, required this.textColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          s.aboutBio1,
+          style: GoogleFonts.outfit(
+            fontWeight: FontWeight.w700, fontSize: 19,
+            height: 1.5, color: textColor,
+          ),
+        ),
+        const SizedBox(height: 18),
+        Text(s.aboutBio2,
+            style: GoogleFonts.outfit(color: secColor, height: 1.82, fontSize: 15)),
+        const SizedBox(height: 14),
+        Text(s.aboutBio3,
+            style: GoogleFonts.outfit(color: secColor, height: 1.82, fontSize: 15)),
+        const SizedBox(height: 28),
+        Wrap(
+          spacing: 10, runSpacing: 10,
+          children: [
+            _PillarChip(s.expMobileArch,    const Color(0xFF7C3AED)),
+            _PillarChip(s.expFintechSecurity, const Color(0xFFE74C3C)),
+            _PillarChip(s.expAi,            const Color(0xFF06B6D4)),
+            _PillarChip(s.svcFullStackTitle, const Color(0xFF6DB33F)),
+          ],
+        ),
+      ],
     );
   }
+}
 
-  Widget _buildUi(double width) {
-    return Center(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return ResponsiveWrapper(
-            maxWidth: width,
-            minWidth: width,
-            defaultScale: false,
-            child: Flex(
-              direction:
-                  constraints.maxWidth > 720 ? Axis.horizontal : Axis.vertical,
-              children: [
-                Expanded(
-                  flex: constraints.maxWidth > 720.0 ? 1 : 0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      Text(
-                        "About Me",
-                        style: GoogleFonts.josefinSans(
-                          fontWeight: FontWeight.w900,
-                          height: 1.3,
-                          fontSize: 35.0,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      Text(
-                        "I'm Amit Kumar Tiwari, A Flutter and Android Developer and Technical Consultant",
-                        style: GoogleFonts.josefinSans(
-                          fontWeight: FontWeight.bold,
-                          height: 1.3,
-                          fontSize: 24.0,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
+class _PillarChip extends StatelessWidget {
+  final String label;
+  final Color  color;
+  const _PillarChip(this.label, this.color);
 
-                      const Text(
-                        "I have done my Computer Science and Engineering on 2014. I have been developing Mobile Apps for more than 9 years now. I have worked as a Team and as an Individual in various organization and launched the apps in Play Store as well as in Appstore. In my free time I use to write Technical Blog in Medium. Always love to learn new technologies and to succeed in an environment of growth and excellence and earn a job which provides me job satisfaction and self-development and help me achieve personal as well as organisational goals.",
-                        style: TextStyle(
-                          color: kCaptionColor,
-                          height: 1.5,
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      Image.asset(AppConstants.devImage, width:  300.0,),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      const Text(
-                        "Technology I have worked with",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Consumer(builder: (context, ref, _) {
-                        return Wrap(
-                          spacing: 20.0,
-                          runSpacing: 20.0,
-                          children: TechnologyConstants.technologyLearned
-                              .map(
-                                (e) =>
-                                Container(
-                                  margin: EdgeInsets.all(5),
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: ref
-                                        .watch(themeProvider)
-                                        .isDarkMode
-                                        ? Colors.green[50]
-                                        : Colors.grey[50],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  width: ScreenHelper.isMobile(context)
-                                      ? constraints.maxWidth / 2.0 - 20.0
-                                      : constraints.maxWidth / 4.0 - 20.0,
-                                  child: MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: Center(
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color:        color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(8),
+        border:       Border.all(color: color.withValues(alpha: 0.30)),
+      ),
+      child: Text(label,
+          style: GoogleFonts.outfit(color: color, fontSize: 13, fontWeight: FontWeight.w600)),
+    );
+  }
+}
 
-                                        children: [
-                                          const SizedBox(
-                                            width: 10.0,
-                                          ),
-                                          SizedBox(
-                                              width: 90,
-                                              height: 90,
-                                              child:
-                                              Image.asset(e.logo, )),
-                                          const SizedBox(
-                                            width: 10.0,
-                                          ),
-                                          Text(
-                                            e.name,
-                                            style: GoogleFonts.josefinSans(
-                                              fontSize: 12.0,
-                                              height: 1.8,
-                                              color: ref
-                                                  .watch(themeProvider)
-                                                  .isDarkMode
-                                                  ? Colors.black
-                                                  : Colors.black,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10.0,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                          )
-                              .toList(),
-                        );
-                      }),
-                      const SizedBox(
-                        height: 70.0,
-                      )
-                    ],
-                  ),
-                ),
+// ── Expertise grid ────────────────────────────────────────────────────────────
+class _ExpertiseGrid extends StatelessWidget {
+  final bool isMobile;
+  final bool isDark;
+  final Color secColor;
+  final Color textColor;
+  final AppStrings strings;
 
-              ],
-            ),
+  const _ExpertiseGrid({
+    required this.isMobile,
+    required this.isDark,
+    required this.secColor,
+    required this.textColor,
+    required this.strings,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      final cols      = isMobile ? 1 : (ScreenHelper.isTablet(context) ? 2 : 3);
+      final itemWidth = (constraints.maxWidth - (cols - 1) * 16) / cols;
+
+      return Wrap(
+        spacing: 16, runSpacing: 16,
+        children: _kExpertise.map((e) {
+          return _ExpertiseCard(
+            data:      e,
+            width:     itemWidth,
+            isDark:    isDark,
+            secColor:  secColor,
+            textColor: textColor,
+            strings:   strings,
           );
-        },
+        }).toList(),
+      );
+    });
+  }
+}
+
+class _ExpertiseCard extends StatefulWidget {
+  final _ExpertiseItem data;
+  final double width;
+  final bool isDark;
+  final Color secColor;
+  final Color textColor;
+  final AppStrings strings;
+
+  const _ExpertiseCard({
+    required this.data,
+    required this.width,
+    required this.isDark,
+    required this.secColor,
+    required this.textColor,
+    required this.strings,
+  });
+
+  @override
+  State<_ExpertiseCard> createState() => _ExpertiseCardState();
+}
+
+class _ExpertiseCardState extends State<_ExpertiseCard> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final c      = widget.data.color;
+    final card   = widget.isDark ? kDarkCard   : kLightCard;
+    final border = widget.isDark ? kDarkBorder : kLightBorder;
+
+    return MouseRegion(
+      cursor:  SystemMouseCursors.basic,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit:  (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration:   const Duration(milliseconds: 160),
+        width:      widget.width,
+        padding:    const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+        decoration: BoxDecoration(
+          color:        _hovered ? c.withValues(alpha: 0.07) : card,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: _hovered ? c.withValues(alpha: 0.45) : border),
+        ),
+        child: Row(children: [
+          Container(
+            width: 40, height: 40,
+            decoration: BoxDecoration(
+              color: c.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(widget.data.icon, color: c, size: 20),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              widget.data.label(widget.strings),
+              style: GoogleFonts.outfit(
+                fontSize:   13,
+                fontWeight: FontWeight.w600,
+                color:      _hovered ? c : widget.textColor,
+                height:     1.3,
+              ),
+            ),
+          ),
+        ]),
       ),
     );
   }

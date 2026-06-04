@@ -2,87 +2,87 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/l10n/locale_provider.dart';
+import '../../core/utils/constants.dart';
 import '../../core/utils/screen_helper.dart';
 import '../../models/project.dart';
+import '../../provider/theme.dart';
 import '../../widgets/header.dart';
 import '../home/components/footer.dart';
 import 'components/work_section.dart';
 
-class MyWorksScreen extends ConsumerStatefulWidget {
-  const MyWorksScreen({Key? key}) : super(key: key);
+class MyWorksScreen extends ConsumerWidget {
+  const MyWorksScreen({super.key});
 
   @override
-  ConsumerState<MyWorksScreen> createState() => _DemoScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeProvider).isDarkMode;
+    final textColor = isDark ? kDarkText : kLightText;
+    final secColor = isDark ? kDarkTextSec : kLightTextSec;
+    final isMobile = ScreenHelper.isMobile(context);
+    final s = ref.watch(stringsProvider);
 
-class _DemoScreenState extends ConsumerState<MyWorksScreen> {
-  final ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Widget _buildPage() {
-    return Stack(
-      children: [
-        ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: ScreenHelper.isDesktop(context) ? 30 : 20,
-                ),
-                Center(
+    return Scaffold(
+      body: Stack(
+        children: [
+          ScrollConfiguration(
+            behavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: kHeaderHeight),
+                  PageWrapper(
+                    extraPadding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 24 : 40,
+                      vertical: 40,
+                    ),
                     child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 80,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          s.worksPortfolioLabel,
+                          style: GoogleFonts.outfit(
+                            color: kAccent,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 2.5,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          s.worksTitle,
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.w800,
+                            fontSize: isMobile ? 32 : 42,
+                            height: 1.15,
+                            color: textColor,
+                            letterSpacing: -1,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          s.worksSubtitle,
+                          style: GoogleFonts.outfit(
+                            color: secColor,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "My Works",
-                      style: GoogleFonts.josefinSans(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 36,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Here are my works",
-                      style: GoogleFonts.josefinSans(
-                        color: Colors.grey[400],
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    )
-                  ],
-                )),
-                WorkSection(
-                  projects: ProjectModel.projects,
-                ),
-                const Footer()
-              ],
+                  ),
+                  WorkSection(projects: ProjectModel.projects),
+                  const SizedBox(height: 24),
+                  const Footer(),
+                ],
+              ),
             ),
           ),
-        ),
-        const CommonHeader(),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildPage(),
+          const CommonHeader(),
+        ],
+      ),
     );
   }
 }

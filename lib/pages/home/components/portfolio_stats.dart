@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:responsive_framework/responsive_framework.dart';
-
+import '../../../core/l10n/app_strings.dart';
+import '../../../core/l10n/locale_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/screen_helper.dart';
-import '../../../models/stat.dart';
+import '../../../provider/theme.dart';
 
-final List<Stat> stats = [
-  Stat(count: "20+", text: "Projects"),
-  Stat(count: "6", text: "Awards"),
-  Stat(
-      count: (DateTime.now().year - 2015).toString(),
-      text: "Years of experience"),
+class _Stat {
+  final String count;
+  final String label;
+  const _Stat(this.count, this.label);
+}
+
+List<_Stat> _buildStats(AppStrings s) => [
+  _Stat("10+",  s.statsYears),
+  _Stat("20+",  s.statsProjects),
+  _Stat("50k+", s.statsDownloads),
+  _Stat("6",    s.statsAwards),
 ];
 
 class PortfolioStats extends StatelessWidget {
@@ -20,60 +26,145 @@ class PortfolioStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: ScreenHelper(
-        desktop: _buildUi(kDesktopMaxWidth, context),
-        tablet: _buildUi(kTabletMaxWidth, context),
-        mobile: _buildUi(getMobileMaxWidth(context), context),
-      ),
+    return Consumer(builder: (context, ref, _) {
+      final isDark      = ref.watch(themeProvider).isDarkMode;
+      final textColor   = isDark ? kDarkText    : kLightText;
+      final secColor    = isDark ? kDarkTextSec : kLightTextSec;
+      final borderColor = isDark ? kDarkBorder  : kLightBorder;
+      final isMobile    = ScreenHelper.isMobile(context);
+      final stats       = _buildStats(ref.watch(stringsProvider));
+
+      return PageWrapper(
+        extraPadding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 24 : 40,
+          vertical:   isMobile ? 8  : 16,
+        ),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : 40,
+            vertical:   isMobile ? 28 : 40,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end:   Alignment.bottomRight,
+              colors: [
+                kAccent.withValues(alpha: isDark ? 0.12 : 0.07),
+                kAccentCyan.withValues(alpha: isDark ? 0.08 : 0.05),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: kAccent.withValues(alpha: isDark ? 0.20 : 0.15),
+            ),
+          ),
+          child: isMobile
+              ? _MobileStats(stats: stats, textColor: textColor, secColor: secColor, borderColor: borderColor)
+              : _DesktopStats(stats: stats, textColor: textColor, secColor: secColor),
+        ),
+      );
+    });
+  }
+}
+
+class _DesktopStats extends StatelessWidget {
+  final List<_Stat> stats;
+  final Color textColor;
+  final Color secColor;
+  const _DesktopStats({required this.stats, required this.textColor, required this.secColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: stats.asMap().entries.map((e) {
+        return Expanded(
+          child: _StatItem(
+            stat:        e.value,
+            textColor:   textColor,
+            secColor:    secColor,
+            showDivider: e.key < stats.length - 1,
+          ),
+        );
+      }).toList(),
     );
   }
+}
 
-  Widget _buildUi(double width, BuildContext context) {
-    return ResponsiveWrapper(
-      maxWidth: width,
-      minWidth: width,
-      defaultScale: false,
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraint) {
-          return Wrap(
-            spacing: 20.0,
-            runSpacing: 20.0,
-            children: stats.map((stat) {
-              return Container(
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                // Just use the helper here really
-                width: ScreenHelper.isMobile(context)
-                    ? constraint.maxWidth / 2.0 - 20
-                    : (constraint.maxWidth / 4.0 - 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      stat.count,
-                      style: GoogleFonts.josefinSans(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 32.0,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      stat.text,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: kCaptionColor,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-          );
-        },
-      ),
+class _MobileStats extends StatelessWidget {
+  final List<_Stat> stats;
+  final Color textColor;
+  final Color secColor;
+  final Color borderColor;
+  const _MobileStats({
+    required this.stats,
+    required this.textColor,
+    required this.secColor,
+    required this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(children: [
+          Expanded(child: _StatItem(stat: stats[0], textColor: textColor, secColor: secColor)),
+          Container(width: 1, height: 56, color: borderColor),
+          Expanded(child: _StatItem(stat: stats[1], textColor: textColor, secColor: secColor)),
+        ]),
+        const SizedBox(height: 16),
+        Container(height: 1, color: borderColor),
+        const SizedBox(height: 16),
+        Row(children: [
+          Expanded(child: _StatItem(stat: stats[2], textColor: textColor, secColor: secColor)),
+          Container(width: 1, height: 56, color: borderColor),
+          Expanded(child: _StatItem(stat: stats[3], textColor: textColor, secColor: secColor)),
+        ]),
+      ],
+    );
+  }
+}
+
+class _StatItem extends StatelessWidget {
+  final _Stat stat;
+  final Color textColor;
+  final Color secColor;
+  final bool showDivider;
+
+  const _StatItem({
+    required this.stat,
+    required this.textColor,
+    required this.secColor,
+    this.showDivider = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(children: [
+            Text(
+              stat.count,
+              style: GoogleFonts.outfit(
+                fontWeight: FontWeight.w800, fontSize: 42,
+                color: kAccent, letterSpacing: -1,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              stat.label,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.outfit(
+                fontSize: 12, color: secColor,
+                height: 1.5, fontWeight: FontWeight.w500,
+              ),
+            ),
+          ]),
+        ),
+        if (showDivider)
+          Container(width: 1, height: 56, color: secColor.withValues(alpha: 0.15)),
+      ],
     );
   }
 }

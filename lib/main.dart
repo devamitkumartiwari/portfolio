@@ -10,5 +10,6 @@ void configureApp() {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  configureApp();
   runApp(const ProviderScope(child: MyApp()));
 }
