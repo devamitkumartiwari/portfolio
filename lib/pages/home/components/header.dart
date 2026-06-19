@@ -362,9 +362,8 @@ class _GlassMobileHeader extends ConsumerWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const HeaderLogo(),
             GestureDetector(
               onTap: () => Globals.scaffoldKey.currentState?.openEndDrawer(),
               child: Container(
