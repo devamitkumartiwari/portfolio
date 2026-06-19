@@ -4,7 +4,7 @@ enum NavSection { home, about, skills, projects, contact, blog, none }
 
 class NameOnTap {
   final String title;
-  final IconData? iconData;
+  final Object? iconData;
   final VoidCallback onTap;
   final bool? isDarkTheme;
   final NavSection section;

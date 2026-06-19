@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/l10n/app_strings.dart';
@@ -252,7 +253,7 @@ class _HeroIllustration extends StatelessWidget {
 
 // ── Social button ─────────────────────────────────────────────────────────────
 class _SocialButton extends StatefulWidget {
-  final IconData? iconData;
+  final Object? iconData;
   final VoidCallback onTap;
   final bool isDark;
   final Color cardColor, borderColor;
@@ -279,8 +280,11 @@ class _SocialButtonState extends State<_SocialButton> {
             border: Border.all(color: _hovered ? kAccent : widget.borderColor),
           ),
           child: Center(
-            child: Icon(widget.iconData, size: 17,
-              color: _hovered ? Colors.white : (widget.isDark ? kDarkTextSec : kLightTextSec)),
+            child: widget.iconData is FaIconData
+                ? FaIcon(widget.iconData as FaIconData, size: 15,
+                    color: _hovered ? Colors.white : (widget.isDark ? kDarkTextSec : kLightTextSec))
+                : Icon(widget.iconData as IconData?, size: 17,
+                    color: _hovered ? Colors.white : (widget.isDark ? kDarkTextSec : kLightTextSec)),
           ),
         ),
       ),

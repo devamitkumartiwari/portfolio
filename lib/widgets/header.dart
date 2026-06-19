@@ -10,23 +10,23 @@ import '../core/utils/screen_helper.dart';
 import '../provider/theme.dart';
 
 class CommonHeader extends ConsumerWidget {
-  const CommonHeader({super.key});
+  const CommonHeader({super.key, this.title});
+
+  final String? title;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(themeProvider).isDarkMode;
     final bg = isDark ? kDarkBg : kLightBg;
     final border = isDark ? kDarkBorder : kLightBorder;
-    final textColor = isDark ? kDarkText : kLightText;
     final secColor = isDark ? kDarkTextSec : kLightTextSec;
     final s = ref.watch(stringsProvider);
+    final isMobile = ScreenHelper.isMobile(context);
 
     return RepaintBoundary(
       child: Container(
         height: kHeaderHeight,
-        padding: EdgeInsets.symmetric(
-          horizontal: ScreenHelper.isDesktop(context) ? 40 : 20,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 40),
         decoration: BoxDecoration(
           color: bg,
           border: Border(bottom: BorderSide(color: border, width: 1)),
@@ -46,7 +46,8 @@ class CommonHeader extends ConsumerWidget {
               child: GestureDetector(
                 onTap: () => context.go(Routes.initial),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 7),
                   decoration: BoxDecoration(
                     border: Border.all(color: kAccent.withValues(alpha: 0.30)),
                     borderRadius: BorderRadius.circular(8),
@@ -71,52 +72,20 @@ class CommonHeader extends ConsumerWidget {
               ),
             ),
 
-            const SizedBox(width: 16),
-
-            // Logo
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () => context.go(Routes.initial),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Amit",
-                        style: GoogleFonts.outfit(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.5,
-                          color: textColor,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ".",
-                        style: GoogleFonts.outfit(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                          color: kAccent,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
             const Spacer(),
 
-            // Page title
-            Text(
-              s.worksTitle,
-              style: GoogleFonts.outfit(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: secColor,
+            // Page title — hidden on mobile to avoid overflow
+            if (!isMobile)
+              Text(
+                title ?? s.worksTitle,
+                style: GoogleFonts.outfit(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: secColor,
+                ),
               ),
-            ),
 
-            const SizedBox(width: 20),
+            if (!isMobile) const SizedBox(width: 20),
 
             // Theme toggle
             _ThemeToggle(isDark: isDark, ref: ref),

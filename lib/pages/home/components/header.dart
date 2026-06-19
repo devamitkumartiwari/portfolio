@@ -291,7 +291,7 @@ class Header extends StatelessWidget {
     return ScreenHelper(
       desktop: _GlassHeader(themeSwitch: themeSwitch, isMobile: false),
       tablet: _GlassHeader(themeSwitch: themeSwitch, isMobile: false),
-      mobile: _GlassMobileHeader(themeSwitch: themeSwitch),
+      mobile: const _GlassMobileHeader(),
     );
   }
 }
@@ -337,8 +337,7 @@ class _GlassHeader extends ConsumerWidget {
 }
 
 class _GlassMobileHeader extends ConsumerWidget {
-  final Widget themeSwitch;
-  const _GlassMobileHeader({required this.themeSwitch});
+  const _GlassMobileHeader();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -366,28 +365,18 @@ class _GlassMobileHeader extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const HeaderLogo(),
-            Row(
-              children: [
-                const _LangButton(),
-                const SizedBox(width: 6),
-                themeSwitch,
-                const SizedBox(width: 8),
-                GestureDetector(
-                  onTap: () =>
-                      Globals.scaffoldKey.currentState?.openEndDrawer(),
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: kAccent.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(8),
-                      border:
-                          Border.all(color: kAccent.withValues(alpha: 0.25)),
-                    ),
-                    child: Icon(Icons.menu_rounded, size: 20, color: iconColor),
-                  ),
+            GestureDetector(
+              onTap: () => Globals.scaffoldKey.currentState?.openEndDrawer(),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: kAccent.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: kAccent.withValues(alpha: 0.25)),
                 ),
-              ],
+                child: Icon(Icons.menu_rounded, size: 22, color: iconColor),
+              ),
             ),
           ],
         ),

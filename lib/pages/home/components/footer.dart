@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/l10n/app_strings.dart';
 import '../../../core/l10n/locale_provider.dart';
+import '../../../core/routes/routes.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/screen_helper.dart';
 import '../../../core/utils/utils.dart';
@@ -122,6 +125,34 @@ class Footer extends StatelessWidget {
               ],
             ),
 
+            const SizedBox(height: 16),
+
+            // Legal links
+            Wrap(
+              spacing: 4,
+              runSpacing: 0,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                _LegalLink(
+                  label: 'Privacy Policy',
+                  secColor: secColor,
+                  onTap: () => context.go('/${Routes.privacyPolicy}'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Text(
+                    '·',
+                    style: GoogleFonts.outfit(color: secColor, fontSize: 12),
+                  ),
+                ),
+                _LegalLink(
+                  label: 'Terms & Conditions',
+                  secColor: secColor,
+                  onTap: () => context.go('/${Routes.termsConditions}'),
+                ),
+              ],
+            ),
+
             const SizedBox(height: 24),
           ],
         ),
@@ -217,7 +248,7 @@ class _ContactCardState extends State<_ContactCard> {
 }
 
 class _FooterSocialBtn extends StatefulWidget {
-  final IconData? iconData;
+  final Object? iconData;
   final VoidCallback onTap;
   final Color cardColor;
   final Color borderColor;
@@ -258,10 +289,54 @@ class _FooterSocialBtnState extends State<_FooterSocialBtn> {
             ),
           ),
           child: Center(
-            child: Icon(
-              widget.iconData,
-              size: 17,
-              color: _hovered ? Colors.white : widget.secColor,
+            child: widget.iconData is FaIconData
+                ? FaIcon(widget.iconData as FaIconData, size: 15,
+                    color: _hovered ? Colors.white : widget.secColor)
+                : Icon(widget.iconData as IconData?, size: 17,
+                    color: _hovered ? Colors.white : widget.secColor),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LegalLink extends StatefulWidget {
+  final String label;
+  final Color secColor;
+  final VoidCallback onTap;
+
+  const _LegalLink({
+    required this.label,
+    required this.secColor,
+    required this.onTap,
+  });
+
+  @override
+  State<_LegalLink> createState() => _LegalLinkState();
+}
+
+class _LegalLinkState extends State<_LegalLink> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+          child: Text(
+            widget.label,
+            style: GoogleFonts.outfit(
+              fontSize: 13,
+              color: _hovered ? kAccent : widget.secColor,
+              decoration:
+                  _hovered ? TextDecoration.underline : TextDecoration.none,
+              decorationColor: kAccent,
             ),
           ),
         ),
