@@ -47,6 +47,7 @@ class Carousel extends StatelessWidget {
 
 List<_TechPill> _buildTechStack(AppStrings s) => [
   const _TechPill('Flutter',     Color(0xFF54C5F8)),
+  const _TechPill('.NET Core',   Color(0xFF512BD4)),
   const _TechPill('Spring Boot', Color(0xFF6DB33F)),
   const _TechPill('Android',     Color(0xFF3DDC84)),
   const _TechPill('Kotlin',      Color(0xFF7F52FF)),

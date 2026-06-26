@@ -1,6 +1,6 @@
 # CLAUDE.md — Portfolio
 
-Flutter web portfolio for **Amit Kumar Tiwari** — Full Stack Developer (Flutter · Java Spring Boot · Native Android Java/Kotlin), 9+ years experience.
+Flutter web portfolio for **Amit Kumar Tiwari** — Freelance Full Stack Developer (Flutter · .NET · Spring Boot · Native Android Java/Kotlin), 10+ years experience.
 
 ## Key Commands
 
@@ -132,7 +132,7 @@ The portfolio presents three capability pillars:
 |--------|------|
 | Mobile Cross-Platform | Flutter (iOS, Android, Web) |
 | Native Android | Java · Kotlin · Jetpack |
-| Backend / APIs | Java Spring Boot · REST · Microservices |
+| Backend / APIs | .NET Core · Java Spring Boot · REST · Microservices |
 
 Reflected in: hero badge, bio text, services cards, about pillar chips, tech stack.
 

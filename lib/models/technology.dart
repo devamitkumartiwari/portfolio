@@ -19,6 +19,8 @@ class TechnologyConstants {
 
   static TechnologyModel springBoot = TechnologyModel("Spring Boot", AppConstants.springImage);
 
+  static TechnologyModel dotNet = TechnologyModel(".NET Core", AppConstants.springImage); // Reuse spring image for now as placeholder or use generic
+
   static TechnologyModel java = TechnologyModel("Java", AppConstants.javaImage);
 
   static TechnologyModel kotlin = TechnologyModel("Kotlin", AppConstants.kotlinImage);

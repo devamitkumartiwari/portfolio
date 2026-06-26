@@ -39,7 +39,7 @@ double getMobileMaxWidth(BuildContext context) =>
 class AppConstants {
   static const linkedInUrl =
       "https://www.linkedin.com/in/beingamitkumartiwari/";
-  static const githubUrl = "https://github.com/amitkumartiwaridis";
+  static const githubUrl = "https://github.com/devamitkumartiwari";
   static const mediumUrl =
       "https://medium.com/@amtechnovation/android-architecture-component-mvvm-part-1-a2e7cff07a76";
   static const cvUrl =

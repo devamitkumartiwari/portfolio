@@ -23,9 +23,20 @@ class CustomThemeProvider extends ChangeNotifier {
 }
 
 class MyThemes {
+  static const List<String> _fontFallbacks = [
+    'Noto Sans Arabic',
+    'Noto Sans Devanagari',
+    'Noto Sans JP',
+    'Noto Sans KR',
+    'Noto Sans SC',
+    'sans-serif',
+  ];
+
   static final lightTheme = ThemeData(
     useMaterial3: false,
     scaffoldBackgroundColor: kLightBg,
+    fontFamily: 'Outfit',
+    fontFamilyFallback: _fontFallbacks,
     colorScheme: const ColorScheme.light(
       primary: kAccent,
       secondary: kAccentCyan,
@@ -39,6 +50,8 @@ class MyThemes {
   static final darkTheme = ThemeData(
     useMaterial3: false,
     scaffoldBackgroundColor: kDarkBg,
+    fontFamily: 'Outfit',
+    fontFamilyFallback: _fontFallbacks,
     colorScheme: const ColorScheme.dark(
       primary: kAccent,
       secondary: kAccentCyan,
