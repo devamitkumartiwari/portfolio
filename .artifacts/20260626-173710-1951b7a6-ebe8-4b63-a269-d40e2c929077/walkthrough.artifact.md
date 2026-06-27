@@ -1,23 +1,25 @@
-# Walkthrough — Profile Update and Role Revert
+# Walkthrough — Privacy Policy Compliance Update
 
-I have updated the GitHub profile URL and reverted specific role titles in the UI while preserving the SEO and .NET integration.
+I have updated and redeployed your Privacy Policy to address the Google Play rejection for **VitaCore** and ensure **Space Cleaner** (Clean Space) is also protected.
 
-## Key Changes
+## Key Accomplishments
 
-### 1. GitHub Profile Update
-- **[constants.dart](file:///Users/dev/Documents/GitHub/portfolio/lib/core/utils/constants.dart)**: Updated `githubUrl` to the new profile: `https://github.com/devamitkumartiwari`.
-- Verified all social icons in the Hero and Footer point to this new URL.
+### 1. Enhanced Compliance Text
+- **[privacy_policy.dart](file:///Users/dev/Documents/GitHub/portfolio/lib/pages/privacy_policy/privacy_policy.dart)**:
+    - **Prominent Identifiers**: Rewrote the first paragraph to explicitly name **VitaCore**, **Space Cleaner**, and **Amit Kumar Tiwari** in bold text. This satisfies Google's "App or developer details don't match" requirement.
+    - **URL Update**: Updated all website references to your live domain: **`https://hireamit.web.app`**.
+    - **Updated Date**: Set the Effective Date to **June 27, 2024**.
 
-### 2. UI Role Branding Revert
-- **[app_strings.dart](file:///Users/dev/Documents/GitHub/portfolio/lib/core/l10n/app_strings.dart)**:
-    - Reverted `heroRole` to **"Full Stack Developer"** across all 12 supported languages.
-    - Reverted `headerTagline` to **"/ Mobile Architect"** across all 12 supported languages.
-    - **SEO Preservation**: Kept the word "Freelance" in bios and project descriptions to maintain the search engine visibility improvements implemented earlier.
+### 2. Live Deployment
+- **Rebuilt**: Ran a fresh production build (`flutter build web --release`).
+- **Redeployed**: Published the updated code to **Firebase Hosting**.
 
-### 3. Exclusions
-- Per your instructions, no changes were made to `index.html` or `manifest.json` regarding these branding reverts.
+## Next Steps for You
+1.  Go to your **Google Play Console**.
+2.  Navigate to **App Content** > **Privacy Policy**.
+3.  Ensure the URL is set to **`https://hireamit.web.app/privacy-policy`**.
+4.  Submit for review.
 
 ## Verification Summary
-- **Link Check**: Confirmed the new GitHub URL is correctly applied in the global constants.
-- **Translation Check**: Verified that the primary roles in the Hero and Header are reverted to their original localized versions across all 12 languages.
-- **LinkedIn Check**: Confirmed that your LinkedIn profile remains active and visible in the social sections.
+- **Live URL**: Verified that visiting `https://hireamit.web.app/privacy-policy` shows the new text.
+- **Match Check**: Confirmed that the first sentence now contains the exact strings "VitaCore", "Space Cleaner", and "Amit Kumar Tiwari".

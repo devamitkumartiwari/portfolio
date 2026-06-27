@@ -60,7 +60,7 @@ class PrivacyPolicyScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Effective Date: June 19, 2026  ·  Last Updated: June 19, 2026',
+                          'Effective Date: June 27, 2024  ·  Last Updated: June 27, 2024',
                           style: GoogleFonts.outfit(
                             color: secColor,
                             fontSize: 15,
@@ -99,18 +99,19 @@ class _PolicyContent extends StatelessWidget {
       const _PolicySection(
         title: '1. Introduction',
         body:
-            'This Privacy Policy applies to all mobile applications and digital products '
-            'developed and published by Amit Kumar Tiwari ("Developer", "I", "me", or "my"), '
-            'including but not limited to:\n\n'
+            'This Privacy Policy applies to the **VitaCore** and **Space Cleaner** mobile applications '
+            'developed and published by **Amit Kumar Tiwari** ("Developer", "I", "me", or "my"), '
+            'as well as all other digital products published under my developer account. '
+            'This includes, but is not limited to:\n\n'
             '• VitaCore — comprehensive wellness, nutrition, and sleep tracker\n'
+            '• Space Cleaner / Cache Cleaner — storage optimizer and junk remover\n'
             '• File Manager & Explorer — professional file management tool\n'
-            '• Cache Cleaner / Space Cleaner — storage optimizer and junk remover\n'
             '• Drink Water Reminder — hydration tracker\n'
             '• Workout & Fitness apps — exercise tracking and planning\n'
             '• Device Safety & Security apps — device health and protection tools\n'
             '• Portfolio and productivity apps\n\n'
             'This policy also applies to my developer portfolio website at '
-            'https://amitkumartiwarimobiledeveloper.web.app. '
+            'https://hireamit.web.app. '
             'By installing or using any of these applications, you agree to the '
             'collection and use of information as described in this policy.',
       ),
@@ -258,7 +259,7 @@ class _PolicyContent extends StatelessWidget {
       const _PolicySection(
         title: '10. Cookies & Tracking (Website)',
         body:
-            'Our portfolio website (https://amitkumartiwarimobiledeveloper.web.app) '
+            'Our portfolio website (https://hireamit.web.app) '
             'does not use advertising cookies or tracking pixels. Firebase Hosting '
             'may use essential session cookies for performance and security. '
             'Our mobile applications do not use cookies.',
@@ -281,7 +282,7 @@ class _PolicyContent extends StatelessWidget {
             'Developer: Amit Kumar Tiwari\n'
             'Email: amtechnovation@gmail.com\n'
             'Location: Lucknow, Uttar Pradesh, India\n'
-            'Website: https://amitkumartiwarimobiledeveloper.web.app\n\n'
+            'Website: https://hireamit.web.app\n\n'
             'We aim to respond to all privacy-related inquiries within 30 days.',
       ),
     ];
