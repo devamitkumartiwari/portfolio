@@ -1,0 +1,11 @@
+- [x] Create Akshara Kids Privacy Policy Page
+    - [x] Create directory `lib/pages/akshara_kids/`
+    - [x] Create `akshara_kids_privacy_policy.dart` with tailored content for kids app and ads disclosure.
+- [x] Register new route in `lib/core/routes/routes.dart`
+    - [x] Add `Routes.aksharaKidsPrivacyPolicy` constant.
+    - [x] Add `GoRoute` for `/aksharakids/privacy-policy`.
+- [x] Implement dynamic Kids App Privacy Policy system
+    - [x] Create `lib/pages/kids_apps/kids_app_configs.dart` with app metadata.
+    - [x] Create `lib/pages/kids_apps/kids_app_privacy_policy.dart` (Reusable component).
+    - [x] Update `lib/core/routes/routes.dart` with dynamic route `:appId/privacy-policy`.
+- [x] Verify all 6 new URLs work.

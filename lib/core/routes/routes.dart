@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 
+import '../../pages/akshara_kids/akshara_kids_privacy_policy.dart';
 import '../../pages/home/home.dart';
+import '../../pages/kids_apps/kids_app_privacy_policy.dart';
 import '../../pages/privacy_policy/privacy_policy.dart';
 import '../../pages/terms_conditions/terms_conditions.dart';
 import '../../pages/works/works.dart';
@@ -10,6 +12,7 @@ class Routes {
   static const String demos = "demos";
   static const String myWorks = "works";
   static const String privacyPolicy = "privacy-policy";
+  static const String aksharaKidsPrivacyPolicy = "aksharakids/privacy-policy";
   static const String termsConditions = "terms-conditions";
 }
 
@@ -29,6 +32,18 @@ class RouterGenerator {
             path: Routes.privacyPolicy,
             name: Routes.privacyPolicy,
             builder: (context, state) => const PrivacyPolicyScreen(),
+          ),
+          GoRoute(
+            path: Routes.aksharaKidsPrivacyPolicy,
+            name: Routes.aksharaKidsPrivacyPolicy,
+            builder: (context, state) => const AksharaKidsPrivacyPolicyScreen(),
+          ),
+          GoRoute(
+            path: ":appId/privacy-policy",
+            builder: (context, state) {
+              final appId = state.pathParameters['appId'] ?? '';
+              return KidsAppPrivacyPolicyScreen(appId: appId);
+            },
           ),
           GoRoute(
             path: Routes.termsConditions,
